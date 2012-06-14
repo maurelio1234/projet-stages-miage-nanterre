@@ -9,7 +9,7 @@
 <body>
 	<h1>Bienvenue cher partenaire !</h1>
 	<form METHOD="POST"
-		ACTION="http://localhost:8080/Car1_TD4_MVC/Controller">
+		ACTION="OffreStagev1.jsp">
 		<p>Veuillez remplir les champs :</p>
 		<table>
 			<tr>

@@ -15,7 +15,7 @@
 		<INPUT TYPE="text" NAME="intitule" SIZE="80" MAXLENGTH="150">
 		<p>Description : </p>
 		<TEXTAREA NAME="description" ROWS="10" COLS="80"></TEXTAREA><br>
-		<input type="submit" value="Enregistrer" /><INPUT TYPE="reset" VALUE="Annuler">
+		<input type="submit" value="Enregistrer" /><INPUT TYPE="button" VALUE="Annuler">
 	</form>
 </body>
 </html>
