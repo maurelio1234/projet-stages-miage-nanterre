@@ -15,7 +15,7 @@
 		<input type="text" name="intitule" value="Intitule de votre offre" SIZE="80" MAXLENGTH="150" disabled="disabled" />
 		<p>Description : </p>
 		<TEXTAREA NAME="description" ROWS="10" COLS="80" disabled="disabled">Description de l'offre</TEXTAREA><br>
-		<input type="submit" value="Modifier" /><INPUT TYPE="reset" VALUE="Annuler">
+		<input type="submit" value="Modifier" /><INPUT TYPE="button" VALUE="Annuler">
 	</form>
 </body>
 </html>

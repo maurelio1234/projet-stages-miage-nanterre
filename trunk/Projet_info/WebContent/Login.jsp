@@ -9,13 +9,13 @@
 <body>
 	<h1>Bienvenue cher utilisateur!!</h1>
 	<form METHOD="POST"
-		ACTION="http://localhost:8080/Car1_TD4_MVC/Controller">
+		ACTION="gestion_offres_entreprise.jsp">
 		<p>Veuillez entrer votre identifiant, ainsi que votre mot de
 			passe!</p>
 		<p>Login:</p>
 		<input type="text" name="login" />
 		<p>Mot de passe:</p>
-		<input type="password" name="mdp" /><br> <input type="submit"  />
+		<input type="password" name="mdp" /><br> <input type="submit" />
 	</form>
 </body>
 </html>
