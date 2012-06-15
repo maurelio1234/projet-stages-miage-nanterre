@@ -1,19 +1,31 @@
 package EtudiantStage;
 	
 
-public class Entreprise {
-    private int numeroEntreprise;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class Entreprise implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -350229262121986549L;
+	private int numeroEntreprise;
     private String nom;
     private String adresse;
     private String telephone;
     private String mail;
     private String login;
     private String pwd;
+    private List<ContratApprentissage> mesContratsA = new ArrayList<ContratApprentissage>();
+    private List<OffreDeStage> mesOffres = new ArrayList<OffreDeStage>();
 	
     /**
 	 * 
 	 */
 	public Entreprise() {
+		super();
 	}
 
 	/**
@@ -27,6 +39,7 @@ public class Entreprise {
 	 */
 	public Entreprise(int numeroEntreprise, String nom, String adresse,
 			String telephone, String mail, String login, String pwd) {
+		this();
 		this.numeroEntreprise = numeroEntreprise;
 		this.nom = nom;
 		this.adresse = adresse;
@@ -34,6 +47,10 @@ public class Entreprise {
 		this.mail = mail;
 		this.login = login;
 		this.pwd = pwd;
+	}
+	
+	public Entreprise(int numeroEntreprise){
+		this(numeroEntreprise,"","","","","","");
 	}
 
 	/**
@@ -133,5 +150,21 @@ public class Entreprise {
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
-	
+
+	public List<ContratApprentissage> getMesContratsA() {
+		return mesContratsA;
+	}
+
+	public void setMesContratsA(List<ContratApprentissage> mesContratsA) {
+		this.mesContratsA = mesContratsA;
+	}
+
+	public List<OffreDeStage> getMesOffres() {
+		return mesOffres;
+	}
+
+	public void setMesOffres(List<OffreDeStage> mesOffres) {
+		this.mesOffres = mesOffres;
+	}
+	 
 }
