@@ -1,105 +1,241 @@
 package EtudiantStage;
 
-	import java.util.GregorianCalendar;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 
-	public class Candidat {
-	    private int NumeroCandidat;
-	    private String Nom;
-	    private String Prenom;
-	    private String Adresse;
-	    private String Telephone;
-	    private GregorianCalendar DateNaissance;
-	    private String Login;
-	    private String PassWord;
-	    private GregorianCalendar Date;
-	    private boolean etatDuDossier;
-	    private String Mail;
-		
-	    
-	    public Candidat(int numeroCandidat, String nom, String prenom,
-				String adresse, String telephone, GregorianCalendar dateNaissance,
-				String login, String passWord, GregorianCalendar date,
-				boolean etatDuDossier, String mail) {
-			NumeroCandidat = numeroCandidat;
-			Nom = nom;
-			Prenom = prenom;
-			Adresse = adresse;
-			Telephone = telephone;
-			DateNaissance = dateNaissance;
-			Login = login;
-			PassWord = passWord;
-			Date = date;
-			etatDuDossier = etatDuDossier;
-			Mail = mail;
-		}
+public class Candidat implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -191382832421990549L;
+	private int numeroCandidat;
+    private String nom;
+    private String prenom;
+    private String adresse;
+	private String telephone;
+	private GregorianCalendar dateNaissance;
+    private String login;
+    private String password;
+    private GregorianCalendar date;
+    private boolean etatDuDossier;
+    private String mail;
+    private Etudiant monEtudiant;
+    private List<Postule> mesPostulations = new ArrayList<Postule>();
+	
+	/**
+	 * 
+	 */
+	public Candidat() {
+		super();
+	}
+	
+    /**
+	 * @param numeroCandidat
+	 * @param nom
+	 * @param prenom
+	 * @param adresse
+	 * @param telephone
+	 * @param dateNaissance
+	 * @param login
+	 * @param passWord
+	 * @param date
+	 * @param etatDuDossier
+	 * @param mail
+	 */
+	public Candidat(int numeroCandidat, String nom, String prenom,
+			String adresse, String telephone, GregorianCalendar dateNaissance,
+			String login, String password, GregorianCalendar date,
+			boolean etatDuDossier, String mail) {
+		this();
+		this.numeroCandidat = numeroCandidat;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.adresse = adresse;
+		this.telephone = telephone;
+		this.dateNaissance = dateNaissance;
+		this.login = login;
+		this.password = password;
+		this.date = date;
+		this.etatDuDossier = etatDuDossier;
+		this.mail = mail;
+	}
 
-		public int getNumeroCandidat() {
-			return NumeroCandidat;
-		}
-		public void setNumeroCandidat(int numeroCandidat) {
-			NumeroCandidat = numeroCandidat;
-		}
-		public String getNom() {
-			return Nom;
-		}
-		public void setNom(String nom) {
-			Nom = nom;
-		}
-		public String getPrenom() {
-			return Prenom;
-		}
-		public void setPrenom(String prenom) {
-			Prenom = prenom;
-		}
-		public String getAdresse() {
-			return Adresse;
-		}
-		public void setAdresse(String adresse) {
-			Adresse = adresse;
-		}
-		public String getTelephone() {
-			return Telephone;
-		}
-		public void setTelephone(String telephone) {
-			Telephone = telephone;
-		}
-		public GregorianCalendar getDateNaissance() {
-			return DateNaissance;
-		}
-		public void setDateNaissance(GregorianCalendar dateNaissance) {
-			DateNaissance = dateNaissance;
-		}
-		public String getLogin() {
-			return Login;
-		}
-		public void setLogin(String login) {
-			Login = login;
-		}
-		public String getPassWord() {
-			return PassWord;
-		}
-		public void setPassWord(String passWord) {
-			PassWord = passWord;
-		}
-		public GregorianCalendar getDate() {
-			return Date;
-		}
-		public void setDate(GregorianCalendar date) {
-			Date = date;
-		}
-		public boolean isetatDuDossier() {
-			return etatDuDossier;
-		}
-		public void setetatDuDossier(boolean etatDuDossier) {
-			etatDuDossier = etatDuDossier;
-		}
-		public String getMail() {
-			return Mail;
-		}
-		public void setMail(String mail) {
-			Mail = mail;
-		}
+	public Candidat(int numeroCandidat){
+		this(numeroCandidat,"","","","",new GregorianCalendar(),"","",new GregorianCalendar(),false,"");
+	}
+	/**
+	 * @return the numeroCandidat
+	 */
+	public int getNumeroCandidat() {
+		return numeroCandidat;
+	}
 
+	/**
+	 * @param numeroCandidat the numeroCandidat to set
+	 */
+	public void setNumeroCandidat(int numeroCandidat) {
+		this.numeroCandidat = numeroCandidat;
+	}
 
+	/**
+	 * @return the nom
+	 */
+	public String getNom() {
+		return nom;
+	}
+
+	/**
+	 * @param nom the nom to set
+	 */
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	/**
+	 * @return the prenom
+	 */
+	public String getPrenom() {
+		return prenom;
+	}
+
+	/**
+	 * @param prenom the prenom to set
+	 */
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
+
+	/**
+	 * @return the adresse
+	 */
+	public String getAdresse() {
+		return adresse;
+	}
+
+	/**
+	 * @param adresse the adresse to set
+	 */
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
+	}
+
+	/**
+	 * @return the telephone
+	 */
+	public String getTelephone() {
+		return telephone;
+	}
+
+	/**
+	 * @param telephone the telephone to set
+	 */
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+
+	/**
+	 * @return the dateNaissance
+	 */
+	public GregorianCalendar getDateNaissance() {
+		return dateNaissance;
+	}
+
+	/**
+	 * @param dateNaissance the dateNaissance to set
+	 */
+	public void setDateNaissance(GregorianCalendar dateNaissance) {
+		this.dateNaissance = dateNaissance;
+	}
+
+	/**
+	 * @return the login
+	 */
+	public String getLogin() {
+		return login;
+	}
+
+	/**
+	 * @param login the login to set
+	 */
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	/**
+	 * @return the passWord
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * @param passWord the passWord to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	/**
+	 * @return the date
+	 */
+	public GregorianCalendar getDate() {
+		return date;
+	}
+
+	/**
+	 * @param date the date to set
+	 */
+	public void setDate(GregorianCalendar date) {
+		this.date = date;
+	}
+
+	/**
+	 * @return the etatDuDossier
+	 */
+	public boolean isEtatDuDossier() {
+		return etatDuDossier;
+	}
+
+	/**
+	 * @param etatDuDossier the etatDuDossier to set
+	 */
+	public void setEtatDuDossier(boolean etatDuDossier) {
+		this.etatDuDossier = etatDuDossier;
+	}
+
+	/**
+	 * @return the mail
+	 */
+	public String getMail() {
+		return mail;
+	}
+
+	/**
+	 * @param mail the mail to set
+	 */
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	public Etudiant getMonEtudiant() {
+		return monEtudiant;
+	}
+
+	public void setMonEtudiant(Etudiant monEtudiant) {
+		this.monEtudiant = monEtudiant;
+	}
+
+	public List<Postule> getMesPostulations() {
+		return mesPostulations;
+	}
+
+	public void setMesPostulations(List<Postule> mesPostulations) {
+		this.mesPostulations = mesPostulations;
+	}
+ 
+	
 }
+
