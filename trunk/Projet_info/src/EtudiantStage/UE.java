@@ -56,6 +56,10 @@ public class UE implements Serializable{
 	public void setMonSemestre(Semestre monSemestre) {
 		this.monSemestre = monSemestre;
 	}
+	
+	
+	
+	
 }
 
 

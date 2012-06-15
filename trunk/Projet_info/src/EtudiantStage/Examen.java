@@ -154,8 +154,10 @@ public class Examen implements Serializable{
 	public void setMesNotes(List<Note> mesNotes) {
 		this.mesNotes = mesNotes;
 	}
+	
+}
        
 
 
 
-}
+
