@@ -2,11 +2,14 @@
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import beans.Entreprise;
 
 /**
  * Servlet implementation class ControleurEtp
@@ -34,6 +37,24 @@ public class ControleurEtp extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+	
+		String nom = request.getParameter("Nom");
+		String adresse = request.getParameter("Adresse");
+		String telephone = request.getParameter("Telephone");
+		String mail = request.getParameter("Mail");
+		String login = request.getParameter("Login");
+		String pwd = request.getParameter("Password");
+		int    numeroEntreprise = 5 ;
+		response.setContentType("text/html;charset=UTF-8");
+		
+		Entreprise etp=new Entreprise(numeroEntreprise,nom,adresse,telephone,mail,login,pwd);
+		
+		RequestDispatcher disp=getServletContext().getRequestDispatcher("/test_reponse.jsp");
+		
+		request.setAttribute("entreprise",etp);
+		
+		disp.forward(request, response);
+		
 	}
 
 }
