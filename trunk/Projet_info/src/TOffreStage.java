@@ -29,12 +29,18 @@ private String Description;
     	
     	while(it1.hasNext()){
     		OffreDeStage v = (OffreDeStage) it1.next();
-    		System.out.println(" Vehicule numero" + v.getDescriptionPoste());
+    		System.out.println("L'offre de stage: " + v.getDescriptionPoste());
     	}
 	}
 	
-	public void ValidationStage(OffreDeStage ods){
-		
+	public void ValidationStage(String description){
+		List<OffreDeStage> ttesLesOffres = new ArrayList<OffreDeStage>();
+		Iterator it = ttesLesOffres.iterator();
+		while(it1.hasNext()){
+			OffreDeStage ods = (OffreDeStage) it1.next();
+			if(ods.getDescriptionPoste == description)
+				ods.setEtatOffre("Validée");
+		}
 	}
 	
 	public void AffichOffreStageEt(Etudiant et){
