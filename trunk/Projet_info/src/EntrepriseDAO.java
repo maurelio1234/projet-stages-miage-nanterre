@@ -14,7 +14,7 @@ import beans.OffreDeStage;
 
 public class EntrepriseDAO extends DAO<Entreprise>{
 	
-	private String FIND_ENTREPRISE = "SELECT * FROM ENTREPRISE WHERE LOGIN_ENTREPRISE = log and MDP_ENTREPRISE = mdp";
+	private String FIND_ENTREPRISE = "SELECT * FROM ENTREPRISE WHERE NO_ENTREPRISE =";
 	private String CREATE_ENTREPRISE = "INSERT INTO Entreprise values (";
 	private String DELETE_ENTREPRISE = "DELETE FROM Entreprise WHERE no_entreprise=";
 	private String UPDATE_ENTREPRISE = "UPDATE Entreprise SET ";
@@ -28,37 +28,18 @@ public class EntrepriseDAO extends DAO<Entreprise>{
 	private String DELETE_OFFRESTAGE = "DELETE FROM OFFRE_STAGE WHERE ...";
 	private String UPDATE_OFFRESTAGE = "UPDATE OFFRE_STAGE SET ";
 	
+	private Statement st;
+	
 
 	
 	//table = new hashtable();
-	
-	Connection newConnection() throws SQLException {
-	    final String url = "jdbc:mysql://localhost/miage";
-	    Connection conn = DriverManager.getConnection(url, "xacouder", "enhancer");
-	    return conn;
-	}
-	
-	public EntrepriseDAO(Connection conn) {
-		super(conn);
+		
+	public EntrepriseDAO() throws SQLException {
+        Connection cx=DriverManager.getConnection("jdbc:oracle:thin:@miage03.dmiage.u-paris10.fr:"
+                                                + "1521:MIAGE","waabdou","apprentis2010pw");
+        
+        st=cx.createStatement();
 		// TODO Auto-generated constructor stub
-	}
-	
-	public void EntrepriseConnexion(String log, String mdp){
-		
-		try{
-			Connection conn = newConnection();
-			Etudiant etudiant = new Etudiant();
-			Candidat candidat = new Candidat();
-			ResultSet rs = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(FIND_ENTREPRISE);
-        
-           //A MODIFIFER
-        }
-        
-	      catch(SQLException ex){
-	        System.err.println("Erreur lors de la connexion a la base");
-	        System.exit(1);
-	      }
-		
 	}
 	
 	
@@ -66,7 +47,7 @@ public class EntrepriseDAO extends DAO<Entreprise>{
 		
 		try{
 
-	        ResultSet rs = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(LIST_ENTREPRISE + ent.getNumeroEntreprise());
+	        ResultSet rs = st.executeQuery(LIST_OFFRESTAGE + ent.getNumeroEntreprise());
 
 	        List<OffreDeStage> listeOffre = new ArrayList<OffreDeStage>();
 	        GregorianCalendar calendar = new GregorianCalendar();
@@ -135,7 +116,7 @@ public class EntrepriseDAO extends DAO<Entreprise>{
 	@Override
 	public void create(Entreprise entr) throws SQLException {
 		// TODO Auto-generated method stub
-		this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(CREATE_ENTREPRISE + entr.getNumeroEntreprise() + "," + entr.getNom() + "," + entr.getTelephone() + "," 
+		st.executeQuery(CREATE_ENTREPRISE + entr.getNumeroEntreprise() + "," + entr.getNom() + "," + entr.getTelephone() + "," 
 		+ entr.getMail() + "," + entr.getLogin() + "," + entr.getPassword());
 		
 	}
@@ -143,27 +124,37 @@ public class EntrepriseDAO extends DAO<Entreprise>{
 	@Override
 	public void delete(Entreprise entr) throws SQLException {
 		// TODO Auto-generated method stub
-		this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(DELETE_ENTREPRISE + entr.getNumeroEntreprise());
+		st.executeQuery(DELETE_ENTREPRISE + entr.getNumeroEntreprise());
 	}
 
 	@Override
 	public void update(Entreprise entr) throws SQLException {
 		// TODO Auto-generated method stub
-		this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(UPDATE_ENTREPRISE + entr.getNumeroEntreprise());
+		st.executeQuery(UPDATE_ENTREPRISE + entr.getNumeroEntreprise());
 	}
 
 	@Override
-	public Entreprise find(int id) throws SQLException {
+	public Entreprise find(int numEntreprise) throws SQLException {
 		// TODO Auto-generated method stub
-		Connection conn = newConnection();
-		return null;
+		Entreprise ent = new Entreprise();
+		ResultSet rs = st.executeQuery(FIND_ENTREPRISE + numEntreprise);
+		while(rs.next()){
+			ent.setNumeroEntreprise(rs.getInt("NO_ENTREPRISE")); 
+            ent.setNom(rs.getString("NOM"));
+            ent.setAdresse(rs.getString("ADRESSE"));
+            ent.setTelephone(rs.getString("TELEPHONE"));
+            ent.setMail(rs.getString("MAIL"));
+            ent.setLogin(rs.getString("LOGIN"));
+            ent.setPassword(rs.getString("PASSWORD"));
+		}
+		return ent;
 	}
 
 	@Override
 	public ArrayList<Entreprise> getList() throws SQLException {
 		ArrayList<Entreprise> listEntreprise = new ArrayList();
 		Entreprise ent = new Entreprise();
-		ResultSet rs = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(LIST_ENTREPRISE);
+		ResultSet rs = st.executeQuery(LIST_ENTREPRISE);
 		for(int i=0; i<rs.getFetchSize(); i++){
 			while(rs.next()){
 				ent.setNumeroEntreprise(rs.getInt("NO_ENTREPRISE")); 
