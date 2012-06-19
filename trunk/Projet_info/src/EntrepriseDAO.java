@@ -18,7 +18,13 @@ public class EntrepriseDAO extends DAO<Entreprise>{
 	private String CREATE_ENTREPRISE = "INSERT INTO Entreprise ...";
 	private String DELETE_ENTREPRISE = "DELETE FROM Entreprise WHERE ...";
 	private String UPDATE_ENTREPRISE = "UPDATE Entreprise SET ";
-	private String LIST_ENTREPRISE = "SELECT * FROM ENTREPRISE OFFRE_STAGE WHERE NO_ENTREPRISE =";
+	private String LIST_OFFRESTAGE = "SELECT * FROM ENTREPRISE OFFRE_STAGE WHERE NO_ENTREPRISE =";
+	
+	private String FIND_OFFRESTAGE = "SELECT * FROM OFFRE_STAGE WHERE DESCRPTION_OFFRE = desc";
+	private String CREATE_OFFRESTAGE = "INSERT INTO OFFRE_STAGE ...";
+	private String DELETE_OFFRESTAGE = "DELETE FROM OFFRE_STAGE WHERE ...";
+	private String UPDATE_OFFRESTAGE = "UPDATE OFFRE_STAGE SET ";
+	
 	
 	private Entreprise ent;
 	private int numeroEnt;
@@ -67,7 +73,7 @@ public class EntrepriseDAO extends DAO<Entreprise>{
 	public void ChargerOffreEnt(){
 		
 		try{
-	        ResultSet rs = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(LIST_ENTREPRISE + numeroEnt);
+	        ResultSet rs = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(LIST_OFFRESTAGE + numeroEnt);
 	        List<OffreDeStage> listeOffre = new ArrayList<OffreDeStage>();
 	        GregorianCalendar calendar = new GregorianCalendar();
 	        OffreDeStage ods = new OffreDeStage();
@@ -84,19 +90,21 @@ public class EntrepriseDAO extends DAO<Entreprise>{
 					ods.setNumeroOffreDeStage(rs.getInt("NO_OFFRE"));
 					ods.setMonEntreprise(ent);
 					
-					
 					ods.setMaConvention(cvst);
 					
 					//date
-					int day = calendar.get(calendar.DATE);
-					int month = calendar.get(calendar.MONTH);
-					int year = calendar.get(calendar.YEAR);
-															
-					jr.setDate(calendar);
+					GregorianCalendar jourDebut = asCalendar(rs.getDate("DATE_DEBUT_STAGE"));
+					jr.setDate(jourDebut);
 					ods.setDateDebutStage(jr);
 					
-					jr.setDate(rs.getDate("DATE_JOUR"));
-					ods.setDateFinStage(jr);								
+//					//date
+//					int day = calendar.get(calendar.DATE);
+//					int month = calendar.get(calendar.MONTH);
+//					int year = calendar.get(calendar.YEAR);
+					
+					GregorianCalendar jourFin = asCalendar(rs.getDate("DATE_FIN_STAGE"));
+					jr.setDate(jourFin);
+					ods.setDateDebutStage(jr);							
 					
 				}
 				listeOffre.add(ods);
@@ -111,7 +119,11 @@ public class EntrepriseDAO extends DAO<Entreprise>{
         
 	}
 	
-	
+	public static GregorianCalendar asCalendar(Date date) {
+		GregorianCalendar cal = (GregorianCalendar) GregorianCalendar.getInstance();
+		cal.setTime(date);
+		return cal;
+	}
 	
     public static void load() {
         // TODO code application logic here
