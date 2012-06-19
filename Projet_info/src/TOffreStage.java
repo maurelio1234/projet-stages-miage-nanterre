@@ -2,6 +2,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import beans.Enseignant;
+import beans.Entreprise;
+import beans.Etudiant;
+import beans.OffreDeStage;
+
 
 public class TOffreStage {
 
@@ -37,7 +42,7 @@ private String Description;
 	
 	public void ValidationStage(String description){
 		List<OffreDeStage> ttesLesOffres = new ArrayList<OffreDeStage>();
-		Iterator it = ttesLesOffres.iterator();
+		Iterator<OffreDeStage> it = ttesLesOffres.iterator();
 		while(it.hasNext()){
 			OffreDeStage ods = (OffreDeStage) it.next();
 			if(ods.getDescriptionPoste() == description)
@@ -46,8 +51,9 @@ private String Description;
 	}
 	
 	public void RejetStage(String description){
-		List<OffreDeStage> ttesLesOffres = new ArrayList<OffreDeStage>();
-		Iterator it = ttesLesOffres.iterator();
+		List<OffreDeStage> ttesLesOffres = new ArrayList<OffreDeStage>(); // liste de toutes les offres 
+		//à charger de la base
+		Iterator<OffreDeStage> it = ttesLesOffres.iterator();
 		while(it.hasNext()){
 			OffreDeStage ods = (OffreDeStage) it.next();
 			if(ods.getDescriptionPoste() == description)
@@ -55,21 +61,23 @@ private String Description;
 		}
 	}
 	
-	public void AffichOffreStageEt(Etudiant et){
-		List<OffreDeStage> listeOffre = new ArrayList<OffreDeStage>();
-		listeOffre = et.getMesOffres();
-		
-		Iterator it1 = listeOffre.iterator();
-    	
-    	while(it1.hasNext()){
-    		OffreDeStage v = (OffreDeStage) it1.next();
-    		System.out.println(" Vehicule numero" + v.getDescriptionPoste());
+	public List<OffreDeStage> AffichOffreStageEt(){
+		List<OffreDeStage> listeOffres = new ArrayList<OffreDeStage>();// liste de toutes les offres 
+		//à charger de la base
+		List<OffreDeStage> listeOffresValidees = new ArrayList<OffreDeStage>();
+		Iterator<OffreDeStage> it = listeOffres.iterator();
+		while(it.hasNext()){
+			OffreDeStage ods = (OffreDeStage) it.next();
+			if(ods.getEtatOffre() == "Validée")
+				listeOffresValidees.add(ods);  	
     	}
+		return listeOffresValidees;
 	}
 	
 	public void AffichOffreStageEns(Enseignant ens){
-		List<OffreDeStage> listeOffre = new ArrayList<OffreDeStage>();
-		listeOffre = et.getMesOffres();
+		List<OffreDeStage> listeOffres = new ArrayList<OffreDeStage>();// liste de toutes les offres 
+		//à charger de la base
+		listeOffreS = ens.getMesOffres();
 		
 		Iterator it1 = listeOffre.iterator();
     	
