@@ -10,8 +10,8 @@ public abstract class DAO<T> {
          * Constructeur
          * @param conn
          */
-        public DAO(Connection conn){
-                this.connect = conn;
+        public DAO(){
+               super();
         }
         
         /**
