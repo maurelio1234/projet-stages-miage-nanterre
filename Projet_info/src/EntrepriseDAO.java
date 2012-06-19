@@ -1,36 +1,48 @@
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 
+import beans.Candidat;
+import beans.ConventionStage;
 import beans.Entreprise;
+import beans.Etudiant;
+import beans.Jours;
+import beans.OffreDeStage;
 
 
-public class EntrepriseDAO {
+public class EntrepriseDAO extends DAO<Entreprise>{
+	
+	private String FIND_ENTREPRISE = "SELECT * FROM ENTREPRISE WHERE LOGIN_ENTREPRISE = log and MDP_ENTREPRISE = mdp";
+	private String CREATE_ENTREPRISE = "INSERT INTO Entreprise ...";
+	private String DELETE_ENTREPRISE = "DELETE FROM Entreprise WHERE ...";
+	private String UPDATE_ENTREPRISE = "UPDATE Entreprise SET ";
+	private String LIST_ENTREPRISE = "SELECT * FROM ENTREPRISE OFFRE_STAGE WHERE NO_ENTREPRISE =";
 	
 	private Entreprise ent;
 	private int numeroEnt;
-	private Connection cx;
 	//table = new hashtable();
-
-	public EntrepriseDAO(){
-		this.ent = new Entreprise();
+	
+	Connection newConnection() throws SQLException {
+	    final String url = "jdbc:mysql://localhost/miage";
+	    Connection conn = DriverManager.getConnection(url, "xacouder", "enhancer");
+	    return conn;
 	}
 	
+	public EntrepriseDAO(Connection conn) {
+		super(conn);
+		// TODO Auto-generated constructor stub
+	}
 	
 	public void EntrepriseConnexion(String log, String mdp){
 		
 		try{
-            /**Connexion à la base= Etape2*/
-            cx=DriverManager.getConnection("jdbc:oracle:thin:@miage03.dmiage.u-paris10.fr:"
-                                                    + "1521:MIAGE","waabdou","apprentis2010pw");
-            
-            /** Creation et exécution d'une requete=Etape 3 & 4*/
-            Statement st=cx.createStatement();
-            ResultSet rs=st.executeQuery("SELECT * FROM waabdou.ENTREPRISE WHERE LOGIN_ENTREPRISE = log " +
-            										"and MDP_ENTREPRISE = mdp");
-            
-                       
+			Connection conn = newConnection();
+			Etudiant etudiant = new Etudiant();
+			Candidat candidat = new Candidat();
+			ResultSet rs = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(FIND_ENTREPRISE);
+        
             while(rs.next()){
             	this.ent.setNumeroEntreprise(rs.getInt("NO_ENTREPRISE")); 
                 this.ent.setNom(rs.getString("NOM"));
@@ -38,14 +50,14 @@ public class EntrepriseDAO {
                 this.ent.setTelephone(rs.getString("TELEPHONE"));
                 this.ent.setMail(rs.getString("MAIL"));
                 this.ent.setLogin(rs.getString("LOGIN"));
-                this.ent.setPwd(rs.getString("PASSWORD"));
+                this.ent.setPassword(rs.getString("PASSWORD"));
                 this.numeroEnt = ent.getNumeroEntreprise();
                 
             }
         }
         
 	      catch(SQLException ex){
-	        System.err.println("Erreur lors de la cx a la base");
+	        System.err.println("Erreur lors de la connexion a la base");
 	        System.exit(1);
 	      }
 		
@@ -55,16 +67,41 @@ public class EntrepriseDAO {
 	public void ChargerOffreEnt(){
 		
 		try{
-			/** Creation et exécution d'une requete=Etape 3 & 4*/
-	        Statement st=cx.createStatement();
-	        ResultSet rs=st.executeQuery("SELECT * FROM waabdou.OFFRE_STAGE WHERE NO_ENTREPRISE = numeroEnt");
+	        ResultSet rs = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(LIST_ENTREPRISE + numeroEnt);
 	        List<OffreDeStage> listeOffre = new ArrayList<OffreDeStage>();
+	        GregorianCalendar calendar = new GregorianCalendar();
+	        OffreDeStage ods = new OffreDeStage();
+	        ConventionStage cvst = new ConventionStage();
+	        Jours jr = new Jours();
 	        
-	        while(rs.next()){
-	        	OffreDeStage ods = (OffreDeStage) rs.next();
-	        	listeOffre.add(ods);
-	            
-	        }
+	        
+	        for(int i=0; i<rs.getFetchSize(); i++){
+				while(rs.next()){
+					
+					
+					ods.setDescriptionPoste(rs.getString("DESCRIPTION_OFFRE"));
+					ods.setEtatOffre(rs.getString("ETAT_OFFRE"));
+					ods.setNumeroOffreDeStage(rs.getInt("NO_OFFRE"));
+					ods.setMonEntreprise(ent);
+					
+					
+					ods.setMaConvention(cvst);
+					
+					//date
+					int day = calendar.get(calendar.DATE);
+					int month = calendar.get(calendar.MONTH);
+					int year = calendar.get(calendar.YEAR);
+															
+					jr.setDate(calendar);
+					ods.setDateDebutStage(jr);
+					
+					jr.setDate(rs.getDate("DATE_JOUR"));
+					ods.setDateFinStage(jr);								
+					
+				}
+				listeOffre.add(ods);
+			}
+
 	    }
 	    
 	      catch(SQLException ex){
@@ -88,6 +125,36 @@ public class EntrepriseDAO {
         }
                 
     }
+
+	@Override
+	public void create(Entreprise obj) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(Entreprise obj) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update(Entreprise obj) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Entreprise find(int id) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Entreprise> getList() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 
 }
