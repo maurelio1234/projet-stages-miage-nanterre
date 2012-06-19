@@ -15,9 +15,12 @@ import beans.OffreDeStage;
 public class EntrepriseDAO extends DAO<Entreprise>{
 	
 	private String FIND_ENTREPRISE = "SELECT * FROM ENTREPRISE WHERE LOGIN_ENTREPRISE = log and MDP_ENTREPRISE = mdp";
-	private String CREATE_ENTREPRISE = "INSERT INTO Entreprise ...";
-	private String DELETE_ENTREPRISE = "DELETE FROM Entreprise WHERE ...";
+	private String CREATE_ENTREPRISE = "INSERT INTO Entreprise values (";
+	private String DELETE_ENTREPRISE = "DELETE FROM Entreprise WHERE no_entreprise=";
 	private String UPDATE_ENTREPRISE = "UPDATE Entreprise SET ";
+
+	private String LIST_ENTREPRISE = "SELECT * FROM ENTREPRISE";
+
 	private String LIST_OFFRESTAGE = "SELECT * FROM ENTREPRISE OFFRE_STAGE WHERE NO_ENTREPRISE =";
 	
 	private String FIND_OFFRESTAGE = "SELECT * FROM OFFRE_STAGE WHERE DESCRPTION_OFFRE = desc";
@@ -25,9 +28,8 @@ public class EntrepriseDAO extends DAO<Entreprise>{
 	private String DELETE_OFFRESTAGE = "DELETE FROM OFFRE_STAGE WHERE ...";
 	private String UPDATE_OFFRESTAGE = "UPDATE OFFRE_STAGE SET ";
 	
+
 	
-	private Entreprise ent;
-	private int numeroEnt;
 	//table = new hashtable();
 	
 	Connection newConnection() throws SQLException {
@@ -49,17 +51,7 @@ public class EntrepriseDAO extends DAO<Entreprise>{
 			Candidat candidat = new Candidat();
 			ResultSet rs = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(FIND_ENTREPRISE);
         
-            while(rs.next()){
-            	this.ent.setNumeroEntreprise(rs.getInt("NO_ENTREPRISE")); 
-                this.ent.setNom(rs.getString("NOM"));
-                this.ent.setAdresse(rs.getString("ADRESSE"));
-                this.ent.setTelephone(rs.getString("TELEPHONE"));
-                this.ent.setMail(rs.getString("MAIL"));
-                this.ent.setLogin(rs.getString("LOGIN"));
-                this.ent.setPassword(rs.getString("PASSWORD"));
-                this.numeroEnt = ent.getNumeroEntreprise();
-                
-            }
+           //A MODIFIFER
         }
         
 	      catch(SQLException ex){
@@ -70,10 +62,12 @@ public class EntrepriseDAO extends DAO<Entreprise>{
 	}
 	
 	
-	public void ChargerOffreEnt(){
+	public void ChargerOffreEnt(Entreprise ent){
 		
 		try{
-	        ResultSet rs = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(LIST_OFFRESTAGE + numeroEnt);
+
+	        ResultSet rs = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(LIST_ENTREPRISE + ent.getNumeroEntreprise());
+
 	        List<OffreDeStage> listeOffre = new ArrayList<OffreDeStage>();
 	        GregorianCalendar calendar = new GregorianCalendar();
 	        OffreDeStage ods = new OffreDeStage();
@@ -139,33 +133,50 @@ public class EntrepriseDAO extends DAO<Entreprise>{
     }
 
 	@Override
-	public void create(Entreprise obj) throws SQLException {
+	public void create(Entreprise entr) throws SQLException {
 		// TODO Auto-generated method stub
+		this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(CREATE_ENTREPRISE + entr.getNumeroEntreprise() + "," + entr.getNom() + "," + entr.getTelephone() + "," 
+		+ entr.getMail() + "," + entr.getLogin() + "," + entr.getPassword());
 		
 	}
 
 	@Override
-	public void delete(Entreprise obj) throws SQLException {
+	public void delete(Entreprise entr) throws SQLException {
 		// TODO Auto-generated method stub
-		
+		this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(DELETE_ENTREPRISE + entr.getNumeroEntreprise());
 	}
 
 	@Override
-	public void update(Entreprise obj) throws SQLException {
+	public void update(Entreprise entr) throws SQLException {
 		// TODO Auto-generated method stub
-		
+		this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(UPDATE_ENTREPRISE + entr.getNumeroEntreprise());
 	}
 
 	@Override
 	public Entreprise find(int id) throws SQLException {
 		// TODO Auto-generated method stub
+		Connection conn = newConnection();
 		return null;
 	}
 
 	@Override
 	public ArrayList<Entreprise> getList() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Entreprise> listEntreprise = new ArrayList();
+		Entreprise ent = new Entreprise();
+		ResultSet rs = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(LIST_ENTREPRISE);
+		for(int i=0; i<rs.getFetchSize(); i++){
+			while(rs.next()){
+				ent.setNumeroEntreprise(rs.getInt("NO_ENTREPRISE")); 
+                ent.setNom(rs.getString("NOM"));
+                ent.setAdresse(rs.getString("ADRESSE"));
+                ent.setTelephone(rs.getString("TELEPHONE"));
+                ent.setMail(rs.getString("MAIL"));
+                ent.setLogin(rs.getString("LOGIN"));
+                ent.setPassword(rs.getString("PASSWORD"));
+			}
+			listEntreprise.add(ent);
+		}
+		return listEntreprise;
 	}
 	
 
