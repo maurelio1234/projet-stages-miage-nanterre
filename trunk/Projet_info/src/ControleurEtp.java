@@ -49,11 +49,12 @@ public class ControleurEtp extends HttpServlet {
 		
 		Entreprise etp=new Entreprise(numeroEntreprise,nom,adresse,telephone,mail,login,pwd);
 		
-		RequestDispatcher disp=getServletContext().getRequestDispatcher("/test_reponse.jsp");
 		
-		request.setAttribute("entreprise",etp);
+		//RequestDispatcher disp=getServletContext().getRequestDispatcher("/test_reponse.jsp");
 		
-		disp.forward(request, response);
+		//request.setAttribute("entreprise",etp);
+		
+		//disp.forward(request, response);
 		
 	}
 
