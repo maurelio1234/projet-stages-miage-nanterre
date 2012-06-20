@@ -2,8 +2,6 @@ package controleur;
 
 
 import java.io.IOException;
-import java.util.GregorianCalendar;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,23 +10,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dao.OffreDeStageDAO;
+import dao.EntrepriseDAO;
 
 import beans.Entreprise;
-import beans.Jours;
-import beans.OffreDeStage;
 
 /**
  * Servlet implementation class ControleuCreaOS
  */
-@WebServlet("/ControleurCreaOS")
-public class ControleurCreaOS extends HttpServlet {
+@WebServlet("/ControleurGestOfEnt")
+public class ControleurGestOfEnt extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	GregorianCalendar date;
+
     /**
      * Default constructor. 
      */
-    public ControleurCreaOS() {
+    public ControleurGestOfEnt() {
         // TODO Auto-generated constructor stub
     }
 
@@ -44,28 +40,18 @@ public class ControleurCreaOS extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		//Création du DAO pour l'entreprise
+		EntrepriseDAO entDAO = new EntrepriseDAO();
+		Entreprise ent = new Entreprise();
 		
-		OffreDeStageDAO odsDAO = new OffreDeStageDAO();
-		OffreDeStage ods = new OffreDeStage();
-		Jours jr = new Jours();
+		//Test sur une entreprise fictive
+		ent = entDAO.find(1);
 		
-		//Récupération de la date en calendar
-		date = OffreDeStageDAO.stringToCalendar(request.getParameter("dateDebut"));
-		jr.setDateDuJour(date);
-		ods.setDateDebutStage(jr);
-		date = OffreDeStageDAO.stringToCalendar(request.getParameter("dateFin"));
-		jr.setDateDuJour(date);
-		ods.setDateFinStage(jr);
 		
-		//Récupération des données d'offre de stage
-		ods.setNumeroOffreDeStage(0);
-		ods.setDescriptionPoste(request.getParameter("description"));
-		ods.setEtatOffre("initialisé");
-		
+		//Récupération de la liste des offres de l'entreprise
+		HttpSession session = request.getSession(true);
 		
 		//Recupération de l'entreprise
-		HttpSession s=request.getSession();
-		ods.setMonEntreprise(entr);
 		
 		
 		
