@@ -24,10 +24,6 @@ public class EntrepriseDAO extends DAO<Entreprise>{
 
 	private String LIST_OFFRESTAGE = "SELECT * FROM ENTREPRISE OFFRE_STAGE WHERE NO_ENTREPRISE =";
 	
-	private String FIND_OFFRESTAGE = "SELECT * FROM OFFRE_STAGE WHERE DESCRPTION_OFFRE = desc";
-	private String CREATE_OFFRESTAGE = "INSERT INTO OFFRE_STAGE ...";
-	private String DELETE_OFFRESTAGE = "DELETE FROM OFFRE_STAGE WHERE ...";
-	private String UPDATE_OFFRESTAGE = "UPDATE OFFRE_STAGE SET ";
 	
 	private Statement st;
 	
@@ -51,7 +47,6 @@ public class EntrepriseDAO extends DAO<Entreprise>{
 	        ResultSet rs = st.executeQuery(LIST_OFFRESTAGE + ent.getNumeroEntreprise());
 
 	        List<OffreDeStage> listeOffre = new ArrayList<OffreDeStage>();
-	        GregorianCalendar calendar = new GregorianCalendar();
 	        OffreDeStage ods = new OffreDeStage();
 	        ConventionStage cvst = new ConventionStage();
 	        Jours jr = new Jours();
@@ -70,7 +65,7 @@ public class EntrepriseDAO extends DAO<Entreprise>{
 					
 					//date
 					GregorianCalendar jourDebut = asCalendar(rs.getDate("DATE_DEBUT_STAGE"));
-					jr.setDate(jourDebut);
+					jr.setDateDuJour(jourDebut);
 					ods.setDateDebutStage(jr);
 					
 //					//date
@@ -79,7 +74,7 @@ public class EntrepriseDAO extends DAO<Entreprise>{
 //					int year = calendar.get(calendar.YEAR);
 					
 					GregorianCalendar jourFin = asCalendar(rs.getDate("DATE_FIN_STAGE"));
-					jr.setDate(jourFin);
+					jr.setDateDuJour(jourFin);
 					ods.setDateDebutStage(jr);							
 					
 				}
