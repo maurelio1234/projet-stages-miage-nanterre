@@ -1,14 +1,15 @@
 package dao;
+import Etudiant;
+
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Date;
 
-import beans.Candidat;
 import beans.ConventionStage;
 import beans.Entreprise;
-import beans.Etudiant;
 import beans.Jours;
 import beans.OffreDeStage;
 
@@ -19,9 +20,7 @@ public class EntrepriseDAO extends DAO<Entreprise>{
 	private String CREATE_ENTREPRISE = "INSERT INTO Entreprise values (";
 	private String DELETE_ENTREPRISE = "DELETE FROM Entreprise WHERE no_entreprise=";
 	private String UPDATE_ENTREPRISE = "UPDATE Entreprise SET ";
-
 	private String LIST_ENTREPRISE = "SELECT * FROM ENTREPRISE";
-
 	private String LIST_OFFRESTAGE = "SELECT * FROM ENTREPRISE OFFRE_STAGE WHERE NO_ENTREPRISE =";
 	
 	
@@ -54,13 +53,10 @@ public class EntrepriseDAO extends DAO<Entreprise>{
 	        
 	        for(int i=0; i<rs.getFetchSize(); i++){
 				while(rs.next()){
-					
-					
 					ods.setDescriptionPoste(rs.getString("DESCRIPTION_OFFRE"));
 					ods.setEtatOffre(rs.getString("ETAT_OFFRE"));
 					ods.setNumeroOffreDeStage(rs.getInt("NO_OFFRE"));
 					ods.setMonEntreprise(ent);
-					
 					ods.setMaConvention(cvst);
 					
 					//date
@@ -68,15 +64,9 @@ public class EntrepriseDAO extends DAO<Entreprise>{
 					jr.setDateDuJour(jourDebut);
 					ods.setDateDebutStage(jr);
 					
-//					//date
-//					int day = calendar.get(calendar.DATE);
-//					int month = calendar.get(calendar.MONTH);
-//					int year = calendar.get(calendar.YEAR);
-					
 					GregorianCalendar jourFin = asCalendar(rs.getDate("DATE_FIN_STAGE"));
 					jr.setDateDuJour(jourFin);
-					ods.setDateDebutStage(jr);							
-					
+					ods.setDateDebutStage(jr);	
 				}
 				listeOffre.add(ods);
 			}
@@ -94,6 +84,12 @@ public class EntrepriseDAO extends DAO<Entreprise>{
 		GregorianCalendar cal = (GregorianCalendar) GregorianCalendar.getInstance();
 		cal.setTime(date);
 		return cal;
+	}
+	
+	public static GregorianCalendar stringToCalendar(String sDate) throws Exception {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = sdf.parse(sDate);
+        return asCalendar(date);
 	}
 	
     public static void load() {
@@ -148,7 +144,7 @@ public class EntrepriseDAO extends DAO<Entreprise>{
 
 	@Override
 	public ArrayList<Entreprise> getList() throws SQLException {
-		ArrayList<Entreprise> listEntreprise = new ArrayList();
+		List<Entreprise> listEntreprise = new ArrayList<Entreprise>();
 		Entreprise ent = new Entreprise();
 		ResultSet rs = st.executeQuery(LIST_ENTREPRISE);
 		for(int i=0; i<rs.getFetchSize(); i++){
