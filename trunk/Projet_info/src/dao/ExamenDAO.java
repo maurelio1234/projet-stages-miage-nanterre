@@ -11,10 +11,12 @@ import java.util.GregorianCalendar;
 
 import beans.Examen;
 import beans.Jours;
+import beans.Note;
 
 public class ExamenDAO extends DAO<Examen> {
 
 	private String FIND_EXAMEN = "SELECT * FROM Examen WHERE NO_EXAMEN =";
+	private String FIND_NOTE = "SELECT * FROM EVALUATION WHERE NO_EXAMEN = ";
 	private Statement st;
 
 	@Override
@@ -62,7 +64,8 @@ public class ExamenDAO extends DAO<Examen> {
 				j.setDateDuJour(dateFromOracleToJava(rs.getDate("DATE_EXAMEN")));
 				e.setDate(j);
 				e.setHoraire(dateFromOracleToJava(rs.getDate("HORAIRE_EXAMEN")));
-				e.setLibelle(rs.getString("LIBELLE_EXAMEN"));				
+				e.setLibelle(rs.getString("LIBELLE_EXAMEN"));
+				e.setMesNotes(getList(rs.getInt("NO_EXAMEN")));
 			}
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
@@ -71,9 +74,14 @@ public class ExamenDAO extends DAO<Examen> {
 		return e;
 	}
 
-	public ArrayList<Examen> getList() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Note> getList(int noExam) throws SQLException {
+		ArrayList<Note> l = new ArrayList<Note>();
+		ResultSet rs = st.executeQuery(FIND_EXAMEN + noExam);
+		while (rs.next()) {
+			l.get(rs.getInt("NOTE"));
+		}
+		
+		return l;
 	}
 
 }
