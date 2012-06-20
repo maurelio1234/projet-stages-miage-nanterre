@@ -26,7 +26,7 @@ private Statement st;
 		for (int i = 0; i < ec.getMesExamens().size() ; i ++){
 	        try {	           
 	            ResultSet rs = st.executeQuery("Select ev.note from Evaluation ev, Examen e Where ev.NO_EXAMEN = '"+ ec.getMesExamens().get(i).getNumeroExamen() +
-	            			"' and ev.NO_EXAMEN = e.NO_EXAMEN and e.DATE_EXAMEN between " + datedebut + "And" +datefin + ";"); 
+	            			"' and ev.NO_EXAMEN = e.NO_EXAMEN and ev.no_etudiant = " + NumeroEtudiant +" and e.DATE_EXAMEN between " + datedebut + "And" + datefin + ";"); 
 
 	            
 	            while(rs.next()){
