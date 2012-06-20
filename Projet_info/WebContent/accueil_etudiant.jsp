@@ -8,13 +8,10 @@
 </head>
 <body>
 	<h1>Gestion des élèves :</h1>
-	<form METHOD="POST"
-		ACTION="http://localhost:8080/Car1_TD4_MVC/Controller">
-		<!--<c:forEach var="IntituleOffre" items="${ListeOffre}">  -->
-			<a href="notes_eleve.jsp"> David Vay</a><br/>
-			<a href="notes_eleve.jsp"> Xavier Couderc</a><br/>
-			<a href="notes_eleve.jsp"> Jonathan Zee</a><br/>
+	<!--<c:forEach var="IntituleOffre" items="${ListeOffre}">  -->
+		<a href="information_etudiant.jsp">Vos informations</a><br/>
+		<a href="gestion_notes.jsp">Vos notes</a><br/>
+		<a href="gestion_offres.jsp">Les offres</a><br/>
 	<!-- </c:forEach> -->
-	</form>
 </body>
 </html>

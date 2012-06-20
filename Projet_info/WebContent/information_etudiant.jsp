@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,31 +12,31 @@
 		<table>
 			<tr>
 				<td>Nom : </td>
-				<td><input type="text" name="nom" value="<% etudiant.getMonCandidat().getNom(); %>" disabled="disabled"/></td>
+				<td><input type="text" name="nom" value="<% etudiant.getMonCandidat().getNom(); %>" /></td>
 			</tr>
 			<tr>
 				<td>Prénom : </td>
-				<td><input type="text" name="Prenom" value="<% etudiant.getMonCandidat().getPrenom(); %>"/></td>
+				<td><input type="text" name="prenom" value="<% etudiant.getMonCandidat().getPrenom(); %>"/></td>
 			</tr>
 			<tr>
 				<td>Adresse : </td>
-				<td><input type="text" name="Adresse" value="<% etudiant.getMonCandidat().getAdresse(); %>"/></td>
+				<td><input type="text" name="adresse" value="<% etudiant.getMonCandidat().getAdresse(); %>"/></td>
 			</tr>
 			<tr>
 				<td>Date de naissance : </td>
-				<td><input type="text" name="Naissance" value="<% etudiant.getMonCandidat().getDateNaissance(); %>"/></td>
+				<td><input type="text" name="date_naissance" value="<% etudiant.getMonCandidat().getDateNaissance(); %>"/></td>
 			</tr>
 			<tr>
 				<td>Telephone : </td>
-				<td><input type="text" name="Telephone" value="<% etudiant.getMonCandidat().getTelephone(); %>" /></td>
+				<td><input type="text" name="telephone" value="<% etudiant.getMonCandidat().getTelephone(); %>" /></td>
 			</tr>
 			<tr>
 				<td>Mail : </td>
-				<td><input type="text" name="Mail" value="<% etudiant.getMonCandidat().getMail(); %>"/></td>
+				<td><input type="text" name="mail" value="<% etudiant.getMonCandidat().getMail(); %>"/></td>
 			</tr>
 			<tr>
 				<td>Login : </td>
-				<td><input type="text" name="Login" value="<% etudiant.getMonCandidat().getLogin(); %>"/></td>
+				<td><input type="text" name="login" value="<% etudiant.getMonCandidat().getLogin(); %>"/></td>
 			</tr>
 		</table>
 		<br/>

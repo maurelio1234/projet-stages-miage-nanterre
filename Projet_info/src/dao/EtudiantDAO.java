@@ -1,9 +1,7 @@
 package dao;
-<<<<<<< .mine
 
-=======
-import java.beans.Statement;
->>>>>>> .r48
+
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
