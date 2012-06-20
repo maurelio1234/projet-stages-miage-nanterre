@@ -17,10 +17,10 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
 	
 	private String FIND_OFFRESTAGE = "SELECT * FROM OFFRE_STAGE WHERE NO_OFFRE =";
 	private String CREATE_OFFRESTAGE = "INSERT INTO OFFRE_STAGE";
-	private String DELETE_OFFRESTAGE = "DELETE FROM OFFRE_STAGE WHERE ...";
+	private String DELETE_OFFRESTAGE = "DELETE FROM OFFRE_STAGE WHERE NO_OFFRE =";
 	private String UPDATE_OFFRESTAGE = "UPDATE OFFRE_STAGE SET ";
 	private String NO_ENT_OFFRESTAGE = "SELECT NO_ENTREPRISE FROM OFFRE_STAGE WHERE NO_OFFRE =";
-	private String LIST_ENTREPRISE = "SELECT * FROM ENTREPRISE";
+	private String LIST_OFFRESTAGE = "SELECT * FROM OFFRE_STAGE";
 	private String FIND_ENTREPRISE = "SELECT * FROM ENTREPRISE WHERE NO_ENTREPRISE =";
 	
 	private Statement st;
@@ -56,11 +56,11 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
 	public OffreDeStage find(int id) throws SQLException {
 		OffreDeStage ods = new OffreDeStage();
 		Entreprise ent = new Entreprise();
-		EntrepriseDAO etpDAO = new EntrepriseDAO();
+//		EntrepriseDAO etpDAO = new EntrepriseDAO();
 		Jours jr = new Jours();
 		 
 		ResultSet rs = st.executeQuery(FIND_OFFRESTAGE + id);
-		ResultSet rs1 = st.executeQuery(NO_ENT_OFFRESTAGE + id);
+//		ResultSet rs1 = st.executeQuery(NO_ENT_OFFRESTAGE + id);
 		
 		while(rs.next()){
 			ods.setNumeroOffreDeStage(rs.getInt("NO_OFFRE")); 
@@ -105,8 +105,31 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
 
 	@Override
 	public ArrayList<OffreDeStage> getList() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<OffreDeStage> listOffreStage = new ArrayList();
+		OffreDeStage ods = new OffreDeStage();
+		Entreprise ent = new Entreprise();
+		
+		ResultSet rs = st.executeQuery(LIST_OFFRESTAGE);
+		for(int i=0; i<rs.getFetchSize(); i++){
+			while(rs.next()){
+				ods.setNumeroOffreDeStage(rs.getInt("NO_OFFRE")); 
+	            ods.setDescriptionPoste(rs.getString("DESCRIPTION_OFFRE"));
+	            ods.setEtatOffre(rs.getString("ETAT_OFFRE"));
+	            ResultSet rs2 = st.executeQuery(FIND_ENTREPRISE + rs.getInt("NO_ENTREPRISE"));
+	    		while(rs2.next()){
+	    			ent.setNumeroEntreprise(rs.getInt("NO_ENTREPRISE")); 
+	                ent.setNom(rs.getString("NOM"));
+	                ent.setAdresse(rs.getString("ADRESSE"));
+	                ent.setTelephone(rs.getString("TELEPHONE"));
+	                ent.setMail(rs.getString("MAIL"));
+	                ent.setLogin(rs.getString("LOGIN"));
+	                ent.setPassword(rs.getString("PASSWORD"));
+	    		}
+	    		ods.setMonEntreprise(ent);
+			}
+			listOffreStage.add(ods);
+		}
+		return listOffreStage;
 	}
 
 }
