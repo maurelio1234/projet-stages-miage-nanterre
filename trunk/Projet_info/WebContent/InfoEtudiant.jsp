@@ -4,45 +4,44 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Information Etudiant</title>
 </head>
 <body>
-	<h1>Bienvenue cher partenaire !</h1>
-	<form METHOD="POST"
-		ACTION="OffreStagev1.jsp">
-		<p>Nom de l'etudiant :</p>
+	<jsp:useBean id="etudiant" scope="request" class="beans.Etudiant"/>
+	<h1>Information de l'étudiant</h1>
+	<form method="POST" action="AccueilEtudiant.jsp">
 		<table>
 			<tr>
 				<td>Nom : </td>
-				<td><input type="text" name="Nom" value="Nom..." disabled="disabled"/></td>
+				<td><input type="text" name="nom" value="<% etudiant.getMonCandidat().getNom(); %>" disabled="disabled"/></td>
 			</tr>
 			<tr>
 				<td>Prénom : </td>
-				<td><input type="text" name="Prenom" value="Prénom..." disabled="disabled"/></td>
+				<td><input type="text" name="Prenom" value="<% etudiant.getMonCandidat().getPrenom(); %>"/></td>
 			</tr>
 			<tr>
 				<td>Adresse : </td>
-				<td><input type="text" name="Adresse" /></td>
+				<td><input type="text" name="Adresse" value="<% etudiant.getMonCandidat().getAdresse(); %>"/></td>
 			</tr>
 			<tr>
 				<td>Date de naissance : </td>
-				<td><input type="text" name="Naissance" value="date de naissance" disabled="disabled"/></td>
+				<td><input type="text" name="Naissance" value="<% etudiant.getMonCandidat().getDateNaissance(); %>"/></td>
 			</tr>
 			<tr>
 				<td>Telephone : </td>
-				<td><input type="text" name="Telephone" /></td>
+				<td><input type="text" name="Telephone" value="<% etudiant.getMonCandidat().getTelephone(); %>" /></td>
 			</tr>
 			<tr>
 				<td>Mail : </td>
-				<td><input type="text" name="Mail" /></td>
+				<td><input type="text" name="Mail" value="<% etudiant.getMonCandidat().getMail(); %>"/></td>
 			</tr>
 			<tr>
 				<td>Login : </td>
-				<td><input type="text" name="Login" value="login etudiant" disabled="disabled"/></td>
+				<td><input type="text" name="Login" value="<% etudiant.getMonCandidat().getLogin(); %>"/></td>
 			</tr>
 		</table>
-		<br>
-		<center><input type="submit" value="Valider"  /><input type="button" value="Retour"  /></center>
+		<br/>
+		<center><input type="submit" value="Valider"/><input type="button" value="Retour"/></center>
 	</form>
 </body>
 </html>
