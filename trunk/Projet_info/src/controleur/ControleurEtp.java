@@ -1,3 +1,4 @@
+package controleur;
 
 
 import java.io.IOException;
@@ -12,16 +13,16 @@ import javax.servlet.http.HttpServletResponse;
 import beans.Entreprise;
 
 /**
- * Servlet implementation class ControleuCreaOS
+ * Servlet implementation class ControleurEtp
  */
-@WebServlet("/ControleurCreaOS")
-public class ControleurCreaOS extends HttpServlet {
+@WebServlet("/ControleurEtp")
+public class ControleurEtp extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * Default constructor. 
      */
-    public ControleurCreaOS() {
+    public ControleurEtp() {
         // TODO Auto-generated constructor stub
     }
 
@@ -38,16 +39,23 @@ public class ControleurCreaOS extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	
-		String intitule = request.getParameter("intitule");
-		String description = request.getParameter("description");
-		OffreDeStageDAO o = new OffreDeStageDAO(5, intitule, description);
-		
+		String nom = request.getParameter("Nom");
+		String adresse = request.getParameter("Adresse");
+		String telephone = request.getParameter("Telephone");
+		String mail = request.getParameter("Mail");
+		String login = request.getParameter("Login");
+		String pwd = request.getParameter("Password");
+		int    numeroEntreprise = 5 ;
 		response.setContentType("text/html;charset=UTF-8");
-		request.setAttribute("ListeOffreEnt", t);
-		RequestDispatcher disp=	getServletContext().getRequestDispatcher("/gestion_offres_entreprise.jsp");
-		disp.forward(request, response);
 		
-	
+		Entreprise etp=new Entreprise(numeroEntreprise,nom,adresse,telephone,mail,login,pwd);
+		
+		
+		//RequestDispatcher disp=getServletContext().getRequestDispatcher("/test_reponse.jsp");
+		
+		//request.setAttribute("entreprise",etp);
+		
+		//disp.forward(request, response);
 		
 	}
 
