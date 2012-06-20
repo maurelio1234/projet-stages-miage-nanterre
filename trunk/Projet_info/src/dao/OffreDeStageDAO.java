@@ -126,6 +126,7 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
 	                ent.setPassword(rs.getString("PASSWORD"));
 	    		}
 	    		ods.setMonEntreprise(ent);
+	    		
 			}
 			listOffreStage.add(ods);
 		}
