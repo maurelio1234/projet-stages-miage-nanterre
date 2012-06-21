@@ -9,12 +9,11 @@
 </head>
 <body>
 	<jsp:useBean id="entr" scope="session" class="beans.Entreprise"/>
-<%-- 	<jsp:useBean id="listeOffreE" scope="session" class="beans.OffreDeStage"/> --%>
 	<h1>Gestion de vos offres :</h1>
 	<form METHOD="POST"	ACTION="ControleurCreaOS">
 		<p>Liste de vos offres :</p>
 
-<%-- 		<c:forEach var="listeOffreE" items="${listeOffreE}"> --%>
+<!-- 		<c:forEach var="listeOffreE" items="${listeOffreE}"> -->
 			<input type="checkbox" name="choix"><% out.print("Entreprise " + entr.getNom() + "  " + entr.getNumeroEntreprise()) ; %>
 			<a href="OffreStagev2.jsp"><img src="/../src/images/modify.png" alt="delete" height="16" width="16"/></a>
 			<a href="Suppresion.jsp"><img src="/src/images/delete.png" alt="delete" height="16" width="16"/></a>
