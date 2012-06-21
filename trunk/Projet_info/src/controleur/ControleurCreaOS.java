@@ -45,9 +45,15 @@ public class ControleurCreaOS extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
+		HttpSession session = request.getSession(true);
+		Entreprise entr = (Entreprise) session.getValue("entr");
+		
 		OffreDeStageDAO odsDAO = new OffreDeStageDAO();
 		OffreDeStage ods = new OffreDeStage();
 		Jours jr = new Jours();
+
+		//Recupération de l'entreprise
+		ods.setMonEntreprise(entr);
 		
 		//Récupération de la date en calendar
 		date = OffreDeStageDAO.stringToCalendar(request.getParameter("dateDebut"));
@@ -62,19 +68,13 @@ public class ControleurCreaOS extends HttpServlet {
 		ods.setDescriptionPoste(request.getParameter("description"));
 		ods.setEtatOffre("initialisé");
 		
+		//Enregistrement de l'offre dans la base
+		odsDAO.create(ods);
 		
-		//Recupération de l'entreprise
-		HttpSession s=request.getSession();
-		ods.setMonEntreprise(entr);
-		
-		
-		
-		response.setContentType("text/html;charset=UTF-8");
-		request.setAttribute("ListeOffreEnt", ods);
+		//response.setContentType("text/html;charset=UTF-8");
+		request.setAttribute("Offre", ods);
 		RequestDispatcher disp=	getServletContext().getRequestDispatcher("/gestion_offres_entreprise.jsp");
 		disp.forward(request, response);
-		
-	
 		
 	}
 

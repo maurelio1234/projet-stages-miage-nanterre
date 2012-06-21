@@ -102,6 +102,14 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
 		cal.setTime(date);
 		return cal;
 	}
+	
+	
+	public static GregorianCalendar stringToCalendar(String sDate) throws Exception {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = sdf.parse(sDate);
+        return asCalendar(date);
+	} 
+	
 
 	@Override
 	public ArrayList<OffreDeStage> getList() throws SQLException {
