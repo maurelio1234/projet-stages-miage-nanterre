@@ -9,7 +9,7 @@
 <body>
 	<h1>Bienvenue cher partenaire !</h1>
 	<form METHOD="POST"
-		ACTION="http://localhost:8080/Projet_info_2/ControleurEtp">
+		ACTION="Controle_InsEtp">
 		<p>Veuillez remplir les champs :</p>
 		<table>
 			<tr>
