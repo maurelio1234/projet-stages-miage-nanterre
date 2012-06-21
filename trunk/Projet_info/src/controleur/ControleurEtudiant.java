@@ -1,5 +1,6 @@
 package controleur;
 
+
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -10,71 +11,60 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.EtudiantDAO;
+import dao.EntrepriseDAO;
 
-import beans.Etudiant;
+import beans.Entreprise;
 
 /**
- * Servlet implementation class ControleurEtudiant
+ * Servlet implementation class ControleurEtp
  */
 @WebServlet("/ControleurEtudiant")
 public class ControleurEtudiant extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Default constructor.
-	 */
-	public ControleurEtudiant() {
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * Default constructor. 
+     */
+    public ControleurEtudiant() {
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-		String login = request.getParameter("login");
-		String mdp = request.getParameter("mdp");
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	
+		String nom = request.getParameter("Nom");
+		String adresse = request.getParameter("Adresse");
+		String telephone = request.getParameter("Telephone");
+		String mail = request.getParameter("Mail");
+		String login = request.getParameter("Login");
+		String pwd = request.getParameter("Password");
+		int    numeroEntreprise = 5 ;
 		response.setContentType("text/html;charset=UTF-8");
-		RequestDispatcher disp;
 		try {
-			EtudiantDAO etu = new EtudiantDAO();
-
-			if (etu.AuthEtu(login, mdp)) {
-				disp = getServletContext()
-						.getRequestDispatcher("/accueileleve.jsp");
-				disp.forward(request, response);
-			} else {
-
-				disp = getServletContext().getRequestDispatcher(
-						"/Login.jsp");
-				disp.forward(request, response);
-			}
-
+			EntrepriseDAO entrepriseDAO = new EntrepriseDAO();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		// RequestDispatcher
-		// disp=getServletContext().getRequestDispatcher("/test_reponse.jsp");
-
-		// request.setAttribute("entreprise",etp);
-
-		// disp.forward(request, response);
-
+		Entreprise etp=new Entreprise(numeroEntreprise,nom,adresse,telephone,mail,login,pwd);
+		
+		
+		RequestDispatcher disp=getServletContext().getRequestDispatcher("/test_reponse.jsp");
+		
+		request.setAttribute("entreprise",etp);
+		
+		disp.forward(request, response);
+		
 	}
 
 }
