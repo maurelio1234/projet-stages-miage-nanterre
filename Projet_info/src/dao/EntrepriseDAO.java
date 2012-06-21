@@ -4,6 +4,7 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Date;
 
@@ -25,16 +26,31 @@ public class EntrepriseDAO extends DAO<Entreprise>{
 	
 	private Statement st;
 	
-
+	private Hashtable<String,String> identifEnt = new Hashtable();
+	private ArrayList<Entreprise> listEntreprise = new ArrayList();
 	
 	//table = new hashtable();
 		
 	public EntrepriseDAO() throws SQLException {
         Connection cx=DriverManager.getConnection("jdbc:oracle:thin:@miage03.dmiage.u-paris10.fr:"
-                                                + "1521:MIAGE","waabdou","apprentis2010pw");
-        
+                                                + "1521:MIAGE","nadiop","finadiop");
         st=cx.createStatement();
-		// TODO Auto-generated constructor stub
+        
+		Entreprise ent = new Entreprise();
+		ResultSet rs = st.executeQuery(LIST_ENTREPRISE);
+		for(int i=0; i<rs.getFetchSize(); i++){
+			while(rs.next()){
+				ent.setNumeroEntreprise(rs.getInt("NO_ENTREPRISE")); 
+                ent.setNom(rs.getString("NOM_ENTREPRISE"));
+                ent.setTelephone(rs.getString("TELEPHONE_ENTREPRISE"));
+                ent.setMail(rs.getString("MAIL_ENTREPRISE"));
+                ent.setLogin(rs.getString("LOGIN_ENTREPRISE"));
+                ent.setPassword(rs.getString("MDP_ENTREPRISE"));
+                identifEnt.put(rs.getString("LOGIN_ENTREPRISE"),rs.getString("MDP_ENTREPRISE"));
+                
+			}
+			listEntreprise.add(ent);
+		}
 	}
 	
 	
@@ -98,8 +114,8 @@ public List<OffreDeStage> ChargerOffreEnt(Entreprise ent) throws SQLException{
 	@Override
 	public void create(Entreprise entr) throws SQLException {
 		// TODO Auto-generated method stub
-		st.executeQuery(CREATE_ENTREPRISE + entr.getNumeroEntreprise() + "," + entr.getNom() + "," + entr.getTelephone() + "," 
-		+ entr.getMail() + "," + entr.getLogin() + "," + entr.getPassword());
+		st.executeQuery(CREATE_ENTREPRISE + entr.getNumeroEntreprise() + "," +"'"+ entr.getNom() +"'"+ "," +"'"+ entr.getTelephone()+"'" + "," 
+		+ "'"+entr.getMail()+"'" + "," + "'"+entr.getLogin() +"'"+ "," + "'"+entr.getPassword()+"'"+")");
 		
 	}
 
@@ -122,34 +138,53 @@ public List<OffreDeStage> ChargerOffreEnt(Entreprise ent) throws SQLException{
 		ResultSet rs = st.executeQuery(FIND_ENTREPRISE + numEntreprise);
 		while(rs.next()){
 			ent.setNumeroEntreprise(rs.getInt("NO_ENTREPRISE")); 
-            ent.setNom(rs.getString("NOM"));
-            ent.setAdresse(rs.getString("ADRESSE"));
-            ent.setTelephone(rs.getString("TELEPHONE"));
-            ent.setMail(rs.getString("MAIL"));
-            ent.setLogin(rs.getString("LOGIN"));
-            ent.setPassword(rs.getString("PASSWORD"));
+            ent.setNom(rs.getString("NOM_ENTREPRISE"));
+            ent.setTelephone(rs.getString("TELEPHONE_ENTREPRISE"));
+            ent.setMail(rs.getString("MAIL_ENTREPRISE"));
+            ent.setLogin(rs.getString("LOGIN_ENTREPRISE"));
+            ent.setPassword(rs.getString("MDP_ENTREPRISE"));
 		}
 		return ent;
 	}
 
 	
-	public List<Entreprise> getList() throws SQLException {
+	public ArrayList<Entreprise> getList() throws SQLException {
 		List<Entreprise> listEntreprise = new ArrayList<Entreprise>();
 		Entreprise ent = new Entreprise();
 		ResultSet rs = st.executeQuery(LIST_ENTREPRISE);
 		for(int i=0; i<rs.getFetchSize(); i++){
 			while(rs.next()){
 				ent.setNumeroEntreprise(rs.getInt("NO_ENTREPRISE")); 
-                ent.setNom(rs.getString("NOM"));
-                ent.setAdresse(rs.getString("ADRESSE"));
-                ent.setTelephone(rs.getString("TELEPHONE"));
-                ent.setMail(rs.getString("MAIL"));
-                ent.setLogin(rs.getString("LOGIN"));
-                ent.setPassword(rs.getString("PASSWORD"));
+                ent.setNom(rs.getString("NOM_ENTREPRISE"));
+                ent.setTelephone(rs.getString("TELEPHONE_ENTREPRISE"));
+                ent.setMail(rs.getString("MAIL_ENTREPRISE"));
+                ent.setLogin(rs.getString("LOGIN_ENTREPRISE"));
+                ent.setPassword(rs.getString("MDP_ENTREPRISE"));
+                
 			}
 			listEntreprise.add(ent);
 		}
-		return listEntreprise;
+		return (ArrayList<Entreprise>) listEntreprise;
+	}
+	
+	public boolean AuthEntreprise(String login, String password){
+		
+		if(this.identifEnt.containsKey(login)==false){
+			return false;
+		}
+		else{
+			if(identifEnt.get(login).equals(password)){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+
+				///if(identifEnt.get(login).equals(password)){
+				//	return true;
+				//}
+				//return false;	
 	}
 	
 
