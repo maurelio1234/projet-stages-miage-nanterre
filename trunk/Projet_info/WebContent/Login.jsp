@@ -9,7 +9,7 @@
 <body>
 	<h1>Bienvenue cher utilisateur!!</h1>
 	<form METHOD="POST"
-		ACTION="gestion_offres_entreprise.jsp">
+		ACTION="Controle_AuthEtp">
 		<p>Veuillez entrer votre identifiant, ainsi que votre mot de
 			passe!</p>
 		<p>Login:</p>
