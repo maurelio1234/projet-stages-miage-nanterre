@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 import beans.Candidat;
 import beans.Etudiant;
@@ -22,25 +23,35 @@ public class EtudiantDAO extends DAO<Etudiant>{
 	private String DELETE_ETUDIANT = "DELETE FROM etudiant WHERE no_etudiant=";
 	private String UPDATE_ETUDIANT = "UPDATE etudiant SET ";
 	private String LIST_ETUDIANT = "SELECT * FROM candidat, etudiant WHERE candidat.no_candidat=etudiant.no_candidat";
-<<<<<<< .mine
+	
+	private Hashtable<String,String> identifetu=new Hashtable();
+	private ArrayList<Etudiant> listEtudiants = new ArrayList();
 
 	public EtudiantDAO() throws SQLException {
-		Connection cx=DriverManager.getConnection("jdbc:oracle:thin:@miage03.dmiage.u-paris10.fr:1521:MIAGE","xacouder","enhancer");
+		Connection cx= DriverManager.getConnection("jdbc:oracle:thin:@miage03.dmiage.u-paris10.fr:1521:MIAGE","davay","apprentis2010pw");
 		st = (Statement) cx.createStatement();
-	}
-=======
-	
->>>>>>> .r48
-<<<<<<< .mine
-=======
-	
-	public EtudiantDAO() throws SQLException {
+		Etudiant etudiant = new Etudiant();
+		Candidat candidat = new Candidat();
+		ResultSet rs = this.st.executeQuery(LIST_ETUDIANT);
+		for(int i=0; i<rs.getFetchSize(); i++){
+			while(rs.next()){
+				etudiant.setNumeroEtudiant(rs.getInt("no_candidat"));
+				candidat.setNom(rs.getString("nom_candidat"));
+				candidat.setPrenom(rs.getString("prenom_candidat"));
+				candidat.setAdresse(rs.getString("adresse_candidat"));
+				candidat.setTelephone(rs.getString("telephone_candidat"));
+				candidat.setLogin(rs.getString("login_candidat"));
+				candidat.setMail(rs.getString("email_candidat"));
+				candidat.setPassword(rs.getString("mdp_candidat"));
+				etudiant.setMonCandidat(candidat);
+				identifetu.put(rs.getString("login_candidat"), rs.getString("mdp_candidat"));
+				
+			}
+			listEtudiants.add(etudiant);
+		}
 		
-		Connection cx = DriverManager.getConnection("jdbc:oracle:thin:@miage03.dmiage.u-paris10.fr:1521:MIAGE", "nadiop","finadiop");
-        Statement st=(Statement) cx.createStatement();
-		// TODO Auto-generated constructor stub
 	}
->>>>>>> .r48
+
 
 	public Etudiant find(int numEtudiant) throws SQLException{
 		Etudiant etudiant = new Etudiant();
@@ -56,8 +67,27 @@ public class EtudiantDAO extends DAO<Etudiant>{
 			candidat.setMail(rs.getString("mail"));
 			candidat.setPassword(rs.getString("pasword"));
 			etudiant.setMonCandidat(candidat);
+			
 		}
 		return etudiant;
+	}
+	
+	public boolean AuthEtu(String login,String mdp){
+		
+		
+		if(this.identifetu.containsKey(login)==false){
+			return false;
+		}
+		else{
+			if(identifetu.get(login).equals(mdp)){
+				
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+		
 	}
 
 	@Override
@@ -78,8 +108,8 @@ public class EtudiantDAO extends DAO<Etudiant>{
 	@Override
 	public ArrayList<Etudiant> getList() throws SQLException {
 		ArrayList<Etudiant> listEtudiants = new ArrayList();
-		Etudiant etudiant = new Etudiant();;
-		Candidat candidat = new Candidat();;
+		Etudiant etudiant = new Etudiant();
+		Candidat candidat = new Candidat();
 		ResultSet rs = this.st.executeQuery(LIST_ETUDIANT);
 		for(int i=0; i<rs.getFetchSize(); i++){
 			while(rs.next()){
@@ -92,6 +122,7 @@ public class EtudiantDAO extends DAO<Etudiant>{
 				candidat.setMail(rs.getString("mail"));
 				candidat.setPassword(rs.getString("pasword"));
 				etudiant.setMonCandidat(candidat);
+				identifetu.put(rs.getString("login"), rs.getString("pasword"));
 			}
 			listEtudiants.add(etudiant);
 		}
