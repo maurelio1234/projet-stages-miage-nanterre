@@ -76,7 +76,7 @@ public class ExamenDAO extends DAO<Examen> {
 
 	public ArrayList<Note> getList(int noExam) throws SQLException {
 		ArrayList<Note> l = new ArrayList<Note>();
-		ResultSet rs = st.executeQuery(FIND_EXAMEN + noExam);
+		ResultSet rs = st.executeQuery(FIND_NOTE + noExam);
 		while (rs.next()) {
 			l.get(rs.getInt("NOTE"));
 		}
