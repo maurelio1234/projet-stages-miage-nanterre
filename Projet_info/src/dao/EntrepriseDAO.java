@@ -1,5 +1,4 @@
 package dao;
-import Etudiant;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -39,46 +38,37 @@ public class EntrepriseDAO extends DAO<Entreprise>{
 	}
 	
 	
-	public void ChargerOffreEnt(Entreprise ent){
+public List<OffreDeStage> ChargerOffreEnt(Entreprise ent) throws SQLException{
 		
-		try{
+        ResultSet rs = st.executeQuery(LIST_OFFRESTAGE + ent.getNumeroEntreprise());
 
-	        ResultSet rs = st.executeQuery(LIST_OFFRESTAGE + ent.getNumeroEntreprise());
-
-	        List<OffreDeStage> listeOffre = new ArrayList<OffreDeStage>();
-	        OffreDeStage ods = new OffreDeStage();
-	        ConventionStage cvst = new ConventionStage();
-	        Jours jr = new Jours();
-	        
-	        
-	        for(int i=0; i<rs.getFetchSize(); i++){
-				while(rs.next()){
-					ods.setDescriptionPoste(rs.getString("DESCRIPTION_OFFRE"));
-					ods.setEtatOffre(rs.getString("ETAT_OFFRE"));
-					ods.setNumeroOffreDeStage(rs.getInt("NO_OFFRE"));
-					ods.setMonEntreprise(ent);
-					ods.setMaConvention(cvst);
-					
-					//date
-					GregorianCalendar jourDebut = asCalendar(rs.getDate("DATE_DEBUT_STAGE"));
-					jr.setDateDuJour(jourDebut);
-					ods.setDateDebutStage(jr);
-					
-					GregorianCalendar jourFin = asCalendar(rs.getDate("DATE_FIN_STAGE"));
-					jr.setDateDuJour(jourFin);
-					ods.setDateDebutStage(jr);	
-				}
-				listeOffre.add(ods);
-			}
-
-	    }
-	    
-	      catch(SQLException ex){
-	        System.err.println("Erreur lors de la cx a la base");
-	        System.exit(1);
-	      }
+        List<OffreDeStage> listeOffre = new ArrayList<OffreDeStage>();
+        OffreDeStage ods = new OffreDeStage();
+        ConventionStage cvst = new ConventionStage();
+        Jours jr = new Jours();
         
+        for(int i=0; i<rs.getFetchSize(); i++){
+			while(rs.next()){
+				ods.setDescriptionPoste(rs.getString("DESCRIPTION_OFFRE"));
+				ods.setEtatOffre(rs.getString("ETAT_OFFRE"));
+				ods.setNumeroOffreDeStage(rs.getInt("NO_OFFRE"));
+				ods.setMonEntreprise(ent);
+				ods.setMaConvention(cvst);
+				
+				//date
+				GregorianCalendar jourDebut = asCalendar(rs.getDate("DATE_DEBUT_STAGE"));
+				jr.setDateDuJour(jourDebut);
+				ods.setDateDebutStage(jr);
+				
+				GregorianCalendar jourFin = asCalendar(rs.getDate("DATE_FIN_STAGE"));
+				jr.setDateDuJour(jourFin);
+				ods.setDateDebutStage(jr);	
+			}
+			listeOffre.add(ods);
+		}
+        return listeOffre;        
 	}
+
 	
 	public static GregorianCalendar asCalendar(Date date) {
 		GregorianCalendar cal = (GregorianCalendar) GregorianCalendar.getInstance();
@@ -142,8 +132,8 @@ public class EntrepriseDAO extends DAO<Entreprise>{
 		return ent;
 	}
 
-	@Override
-	public ArrayList<Entreprise> getList() throws SQLException {
+	
+	public List<Entreprise> getList() throws SQLException {
 		List<Entreprise> listEntreprise = new ArrayList<Entreprise>();
 		Entreprise ent = new Entreprise();
 		ResultSet rs = st.executeQuery(LIST_ENTREPRISE);
