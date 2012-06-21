@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -69,13 +70,12 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
             
     		ResultSet rs2 = st.executeQuery(FIND_ENTREPRISE + rs.getInt("NO_ENTREPRISE"));
     		while(rs2.next()){
-    			ent.setNumeroEntreprise(rs.getInt("NO_ENTREPRISE")); 
-                ent.setNom(rs.getString("NOM"));
-                ent.setAdresse(rs.getString("ADRESSE"));
-                ent.setTelephone(rs.getString("TELEPHONE"));
-                ent.setMail(rs.getString("MAIL"));
-                ent.setLogin(rs.getString("LOGIN"));
-                ent.setPassword(rs.getString("PASSWORD"));
+//    			ent.setNumeroEntreprise(rs.getInt("NO_ENTREPRISE")); 
+                ent.setNom(rs.getString("NOM_ENTREPRISE"));
+                ent.setTelephone(rs.getString("TELEPHONE_ENTREPRISE"));
+                ent.setMail(rs.getString("MAIL_ENTREPRISE"));
+                ent.setLogin(rs.getString("LOGIN_ENTREPRISE"));
+                ent.setPassword(rs.getString("MDP_ENTREPRISE"));
     		}
     		ods.setMonEntreprise(ent);
     		
@@ -89,11 +89,14 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
 			
 			GregorianCalendar jourFin = asCalendar(rs.getDate("DATE_FIN_STAGE"));
 			jr.setDateDuJour(jourFin);
-			ods.setDateFinStage(jr);
-			
-            
-            
+			ods.setDateFinStage(jr);       
 		}
+		rs.next();
+		System.out.println("Numero offre" + ods.getNumeroOffreDeStage());
+		System.out.println("Description offre" + ods.getDescriptionPoste());
+		System.out.println("Etat offre" + ods.getEtatOffre());
+		System.out.println("Date debut" + ods.getDateDebutStage());
+		
 		return ods;
 	}
 	
@@ -106,7 +109,7 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
 	
 	public static GregorianCalendar stringToCalendar(String sDate) throws Exception {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = sdf.parse(sDate);
+        Date date = (Date) sdf.parse(sDate);
         return asCalendar(date);
 	} 
 	
@@ -140,5 +143,18 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
 		}
 		return listOffreStage;
 	}
+	
+	 public static void load() {
+	        // TODO code application logic here
+	        /**Chargement du driver JDBC=Etape1*/
+	        try{
+	            Class.forName("oracle.jdbc.driver.OracleDriver");
+	        }
+	        catch(Exception ex){
+	            System.err.println("Erreur lors du chargement du driver");
+	            System.exit(1);
+	        }
+	                
+	    }
 
 }
