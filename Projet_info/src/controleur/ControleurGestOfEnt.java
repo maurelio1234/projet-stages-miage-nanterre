@@ -27,6 +27,7 @@ import beans.OffreDeStage;
 @WebServlet("/ControleurGestOfEnt")
 public class ControleurGestOfEnt extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private EntrepriseDAO entDAO;
 	private List<OffreDeStage> listeOffre = new ArrayList<OffreDeStage>();
 
     /**
@@ -34,6 +35,7 @@ public class ControleurGestOfEnt extends HttpServlet {
      */
     public ControleurGestOfEnt() {
         // TODO Auto-generated constructor stub
+    	entDAO.load();
     }
 
 	/**
@@ -56,13 +58,12 @@ public class ControleurGestOfEnt extends HttpServlet {
 		//Test sur une entreprise fictive
 		
 		try {
-			EntrepriseDAO entDAO = new EntrepriseDAO();
+			entDAO = new EntrepriseDAO();
 			ent = entDAO.find(1);			
 			listeOffre = entDAO.ChargerOffreEnt(ent);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			ent.setNom("Pas trouve");
 		}
 		
 		
