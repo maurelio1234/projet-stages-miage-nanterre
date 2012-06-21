@@ -64,20 +64,26 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
 //		ResultSet rs1 = st.executeQuery(NO_ENT_OFFRESTAGE + id);
 		
 		while(rs.next()){
+			System.out.println("Je suis dans la 1ere boucle");
 			ods.setNumeroOffreDeStage(rs.getInt("NO_OFFRE")); 
+			System.out.println("Je fais no offre: " + rs.getInt("NO_OFFRE"));
             ods.setDescriptionPoste(rs.getString("DESCRIPTION_OFFRE"));
+            System.out.println("Je fais description offre: " + rs.getString("DESCRIPTION_OFFRE"));
             ods.setEtatOffre(rs.getString("ETAT_OFFRE"));
+            System.out.println("Je fais etat offre: " + rs.getString("ETAT_OFFRE"));
             
-    		ResultSet rs2 = st.executeQuery(FIND_ENTREPRISE + rs.getInt("NO_ENTREPRISE"));
-    		while(rs2.next()){
-//    			ent.setNumeroEntreprise(rs.getInt("NO_ENTREPRISE")); 
-                ent.setNom(rs.getString("NOM_ENTREPRISE"));
-                ent.setTelephone(rs.getString("TELEPHONE_ENTREPRISE"));
-                ent.setMail(rs.getString("MAIL_ENTREPRISE"));
-                ent.setLogin(rs.getString("LOGIN_ENTREPRISE"));
-                ent.setPassword(rs.getString("MDP_ENTREPRISE"));
-    		}
-    		ods.setMonEntreprise(ent);
+//    		ResultSet rs2 = st.executeQuery(FIND_ENTREPRISE + rs.getInt("NO_ENTREPRISE"));
+//    		System.out.println("Je fais No entreprise: " + rs.getString("NO_NETREPRISE"));
+//    		while(rs2.next()){
+//    			System.out.println("Je suis dans la 2e boucle");
+////    			ent.setNumeroEntreprise(rs.getInt("NO_ENTREPRISE")); 
+//                ent.setNom(rs.getString("NOM_ENTREPRISE"));
+//                ent.setTelephone(rs.getString("TELEPHONE_ENTREPRISE"));
+//                ent.setMail(rs.getString("MAIL_ENTREPRISE"));
+//                ent.setLogin(rs.getString("LOGIN_ENTREPRISE"));
+//                ent.setPassword(rs.getString("MDP_ENTREPRISE"));
+//    		}
+//    		ods.setMonEntreprise(ent);
     		
 //            Entreprise etp = etpDAO.find(rs.getInt("NO_ENTREPRISE"));
 //            etp.setNumeroEntreprise(rs.getInt("NO_ENTREPRISE"));
@@ -91,7 +97,7 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
 			jr.setDateDuJour(jourFin);
 			ods.setDateFinStage(jr);       
 		}
-		rs.next();
+		
 		System.out.println("Numero offre" + ods.getNumeroOffreDeStage());
 		System.out.println("Description offre" + ods.getDescriptionPoste());
 		System.out.println("Etat offre" + ods.getEtatOffre());
