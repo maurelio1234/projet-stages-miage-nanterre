@@ -33,7 +33,7 @@ public class EntrepriseDAO extends DAO<Entreprise>{
 		
 	public EntrepriseDAO() throws SQLException {
         Connection cx=DriverManager.getConnection("jdbc:oracle:thin:@miage03.dmiage.u-paris10.fr:"
-                                                + "1521:MIAGE","nadiop","finadiop");
+                                                + "1521:MIAGE","ebkacouc","apprentis2010pw");
         st=cx.createStatement();
         
 		Entreprise ent = new Entreprise();
