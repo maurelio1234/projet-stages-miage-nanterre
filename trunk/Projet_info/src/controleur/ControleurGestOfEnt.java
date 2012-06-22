@@ -59,8 +59,9 @@ public class ControleurGestOfEnt extends HttpServlet {
 		
 		try {
 			entDAO = new EntrepriseDAO();
-			ent = entDAO.find(1);			
+			ent = entDAO.find(2);			
 			listeOffre = entDAO.ChargerOffreEnt(ent);
+			ent.setMesOffres(listeOffre);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -71,10 +72,7 @@ public class ControleurGestOfEnt extends HttpServlet {
 		HttpSession session = request.getSession(true);
 				
 		//Recupération des données de l'entreprise pour la servlet suivante
-		//session.setAttribute("EntrepDAO", entDAO);
-		session.setAttribute("listeOffreE", listeOffre);
-		session.setAttribute("entr", ent);
-				
+		session.setAttribute("entr", ent);				
 		RequestDispatcher disp=	getServletContext().getRequestDispatcher("/gestion_offres_entreprise.jsp");
 		disp.forward(request, response);
 		
