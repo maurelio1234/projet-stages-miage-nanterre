@@ -21,12 +21,13 @@ import dao.OffreDeStageDAO;
 @WebServlet("/Controleur_OS_ConsultEtp")
 public class Controleur_OS_ConsultEtp extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    private OffreDeStage ods = new OffreDeStage();
+    private OffreDeStageDAO odsDAO;
     /**
      * @see HttpServlet#HttpServlet()
      */
     public Controleur_OS_ConsultEtp() {
-        super();
+    	odsDAO.load();
         // TODO Auto-generated constructor stub
     }
 
@@ -41,13 +42,10 @@ public class Controleur_OS_ConsultEtp extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		OffreDeStage ods = new OffreDeStage();
 //		int identifiant = Integer.parseInt(request.getParameter("id"));
-		OffreDeStageDAO odsDAO;
+		
 		try {
 			odsDAO = new OffreDeStageDAO();
-			odsDAO.load();
 //			ods = odsDAO.find(identifiant);
 			ods = odsDAO.find(1);
 			
@@ -56,11 +54,11 @@ public class Controleur_OS_ConsultEtp extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-			HttpSession session = request.getSession(true);
-			
-			RequestDispatcher disp=getServletContext().getRequestDispatcher("/OffreStageConsult.jsp");
-			session.setAttribute("offrestage",ods);
-			disp.forward(request, response);
+		HttpSession session = request.getSession(true);
+		
+		session.setAttribute("offrestage",ods);
+		RequestDispatcher disp=getServletContext().getRequestDispatcher("/OffreStageConsult.jsp");
+		disp.forward(request, response);
 		
 	}
 
