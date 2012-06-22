@@ -9,16 +9,29 @@
 </head>
 <body>
 	<jsp:useBean id="entr" scope="session" class="beans.Entreprise"/>
-	<h1>Gestion de vos offres :</h1>
+	<h1>Gestion des offres de <% out.println(entr.getNom()); %> :</h1>
 	<form METHOD="POST"	ACTION="ControleurCreaOS">
 		<p>Liste de vos offres :</p>
 
-<!-- 		<c:forEach var="listeOffreE" items="${listeOffreE}"> -->
-			<input type="checkbox" name="choix"><% out.print("Entreprise " + entr.getNom() + "  " + entr.getNumeroEntreprise()) ; %>
-			<a href="OffreStagev2.jsp"><img src="/../src/images/modify.png" alt="delete" height="16" width="16"/></a>
-			<a href="Suppresion.jsp"><img src="/src/images/delete.png" alt="delete" height="16" width="16"/></a>
+			<%
+			OffreDeStage ods = new OffreDeStage();
+		    for (int i = 0; i <entr.getMesOffres().size(); i++) {
+		        ods=entr.getMesOffres().get(i);
+		        %><input type="checkbox" name="choix">
+		        <%
+			 	out.println(ods.getDescriptionPoste() + " : état à " + ods.getEtatOffre()) ;
+			 	%>
+			 	<a href="OffreStagev2.jsp"><img src="/../src/images/modify.png" alt="delete" height="16" width="16"/></a>
+				<a href="Suppresion.jsp"><img src="/src/images/delete.png" alt="delete" height="16" width="16"/></a>
+			 	<br>
+			 	<%
+			}
+		    %>
 			<br>
-<!-- 		</c:forEach> -->
+			<%
+		    out.println("Nombre d'offres " + entr.getMesOffres().size()) ;
+		    %>
+			<br>
 	<input type="submit" value="Créer" name="creer_offre"/>
 	</form>
 </body>
