@@ -112,30 +112,67 @@ public List<OffreDeStage> ChargerOffreEnt(Entreprise ent) throws SQLException{
     }
 
 	@Override
-	public void create(Entreprise entr) throws SQLException {
-		// TODO Auto-generated method stub
-		st.executeQuery(CREATE_ENTREPRISE + entr.getNumeroEntreprise() + "," +"'"+ entr.getNom() +"'"+ "," +"'"+ entr.getTelephone()+"'" + "," 
-		+ "'"+entr.getMail()+"'" + "," + "'"+entr.getLogin() +"'"+ "," + "'"+entr.getPassword()+"'"+")");
+	public Entreprise create(Entreprise entr) {
+		ResultSet rs;
+		try {
+			rs = st.executeQuery(CREATE_ENTREPRISE + entr.getNumeroEntreprise() + "," +"'"+ entr.getNom() +"'"+ "," +"'"+ entr.getTelephone()+"'" + "," 
+			+ "'"+entr.getMail()+"'" + "," + "'"+entr.getLogin() +"'"+ "," + "'"+entr.getPassword()+"'"+")");
 		
-	}
+			while(rs.next()){
+				entr.setNumeroEntreprise(rs.getInt("NO_ENTREPRISE")); 
+	            entr.setNom(rs.getString("NOM_ENTREPRISE"));
+	            entr.setTelephone(rs.getString("TELEPHONE_ENTREPRISE"));
+	            entr.setMail(rs.getString("MAIL_ENTREPRISE"));
+	            entr.setLogin(rs.getString("LOGIN_ENTREPRISE"));
+	            entr.setPassword(rs.getString("MDP_ENTREPRISE"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return entr;
+		}
+	
 
 	@Override
-	public void delete(Entreprise entr) throws SQLException {
+	public void delete(Entreprise entr) {
 		// TODO Auto-generated method stub
-		st.executeQuery(DELETE_ENTREPRISE + entr.getNumeroEntreprise());
+		try {
+			st.executeQuery(DELETE_ENTREPRISE + entr.getNumeroEntreprise());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
-	public void update(Entreprise entr) throws SQLException {
-		// TODO Auto-generated method stub
-		st.executeQuery(UPDATE_ENTREPRISE + entr.getNumeroEntreprise());
+	public Entreprise update(Entreprise entr) {
+		ResultSet rs;
+		try {
+			rs = st.executeQuery(UPDATE_ENTREPRISE + entr.getNumeroEntreprise());
+			while(rs.next()){
+				entr.setNumeroEntreprise(rs.getInt("NO_ENTREPRISE")); 
+	            entr.setNom(rs.getString("NOM_ENTREPRISE"));
+	            entr.setTelephone(rs.getString("TELEPHONE_ENTREPRISE"));
+	            entr.setMail(rs.getString("MAIL_ENTREPRISE"));
+	            entr.setLogin(rs.getString("LOGIN_ENTREPRISE"));
+	            entr.setPassword(rs.getString("MDP_ENTREPRISE"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return entr;
 	}
 
 	@Override
-	public Entreprise find(int numEntreprise) throws SQLException {
+	public Entreprise find(int numEntreprise) {
 		// TODO Auto-generated method stub
 		Entreprise ent = new Entreprise();
-		ResultSet rs = st.executeQuery(FIND_ENTREPRISE + numEntreprise);
+		ResultSet rs;
+		try {
+			rs = st.executeQuery(FIND_ENTREPRISE + numEntreprise);
+		
 		while(rs.next()){
 			ent.setNumeroEntreprise(rs.getInt("NO_ENTREPRISE")); 
             ent.setNom(rs.getString("NOM_ENTREPRISE"));
@@ -143,6 +180,10 @@ public List<OffreDeStage> ChargerOffreEnt(Entreprise ent) throws SQLException{
             ent.setMail(rs.getString("MAIL_ENTREPRISE"));
             ent.setLogin(rs.getString("LOGIN_ENTREPRISE"));
             ent.setPassword(rs.getString("MDP_ENTREPRISE"));
+		}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return ent;
 	}
