@@ -7,11 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<jsp:useBean id="etudiant" scope="request" class="beans.Etudiant"/>
 	<h1>Gestion des élèves :</h1>
-	<!--<c:forEach var="IntituleOffre" items="${ListeOffre}">  -->
-		<a href="information_etudiant.jsp">Vos informations</a><br/>
-		<a href="gestion_notes.jsp">Vos notes</a><br/>
-		<a href="gestion_offres.jsp">Les offres</a><br/>
-	<!-- </c:forEach> -->
+		<a href="Controleur_Info_Etudiant?id_etudiant=<%etudiant.getNumeroEtudiant(); %>id_etudiant}">Vos informations</a><br/>
+		<a href="Controleur_Gestion_Notes?id_etudiant=<%etudiant.getNumeroEtudiant();%>">Vos notes</a><br/>
+		<a href="Controleur_Gestion_Offres">Vos offres</a><br/>
 </body>
 </html>
