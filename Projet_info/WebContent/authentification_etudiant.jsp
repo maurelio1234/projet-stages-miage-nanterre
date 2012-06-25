@@ -8,7 +8,7 @@
 </head>
 <body>
 	<h1>Bienvenue cher utilisateur!!</h1>
-	<form METHOD="POST" ACTION="ControleurEtu">
+	<form METHOD="POST" ACTION="Controleur_Accueil_Etudiant">
 		<p>Veuillez entrer votre identifiant, ainsi que votre mot de
 			passe!</p>
 		<p>Login:</p>
