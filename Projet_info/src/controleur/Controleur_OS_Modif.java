@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import beans.OffreDeStage;
 import dao.OffreDeStageDAO;
@@ -19,12 +20,13 @@ import dao.OffreDeStageDAO;
 @WebServlet("/Controleur_OS_Modif")
 public class Controleur_OS_Modif extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    private OffreDeStage ods = new OffreDeStage();
+    private OffreDeStageDAO odsDAO;
     /**
      * @see HttpServlet#HttpServlet()
      */
     public Controleur_OS_Modif() {
-        super();
+        odsDAO.load();
         // TODO Auto-generated constructor stub
     }
 
@@ -32,7 +34,27 @@ public class Controleur_OS_Modif extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		HttpSession session = request.getSession(true);
+		
+		OffreDeStage ods = new OffreDeStage();
+		ods = (OffreDeStage) session.getAttribute("offre");
+		
+		try {
+			odsDAO = new OffreDeStageDAO();
+			
+			odsDAO.update(ods);
+			
+	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		request.setAttribute("Offre", ods);
+		RequestDispatcher disp = getServletContext().getRequestDispatcher("/OffreStageModif.jsp");
+		disp.forward(request, response);
+		
+		
 	}
 
 	/**
@@ -40,15 +62,16 @@ public class Controleur_OS_Modif extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //		int identifiant = Integer.parseInt(request.getParameter("id"));
-		OffreDeStageDAO odsDAO;
+		
 		try {
 			odsDAO = new OffreDeStageDAO();
-			OffreDeStage ods = new OffreDeStage();
-//			ods = odsDAO.find(identifiant);
-			ods = odsDAO.update(1);
 			
-			RequestDispatcher disp=getServletContext().getRequestDispatcher("/OffreStageModif.jsp");
+//			ods = odsDAO.find(identifiant);
+			odsDAO.update(ods);
+			
 			request.setAttribute("offrestage",ods);
+			RequestDispatcher disp=getServletContext().getRequestDispatcher("/OffreStageModif.jsp");
+			
 			disp.forward(request, response);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -56,6 +79,6 @@ public class Controleur_OS_Modif extends HttpServlet {
 		}
 		
 	}
-	}
-
 }
+
+
