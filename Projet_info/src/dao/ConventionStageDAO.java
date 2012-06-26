@@ -3,13 +3,8 @@ package dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.sql.SQLException;
-import java.sql.Statement;
 
-import beans.ContratApprentissage;
 import beans.ConventionStage;
 
 public class ConventionStageDAO extends DAO<ConventionStage> {
@@ -25,17 +20,12 @@ public class ConventionStageDAO extends DAO<ConventionStage> {
 					+ "'" + obj.getDureeConvention() + "')";
 
 			request.executeUpdate(requete);
-
-			if (debug)
-				System.out.println(requete);
-
 			request.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return obj;
 		
-		return null;
 	}
 
 	@Override
@@ -61,7 +51,7 @@ public class ConventionStageDAO extends DAO<ConventionStage> {
 
 			if(result.first()){
 			
-				obj = new ConventionStage((result.getInt("NO_CONTRAT")),(result.getDate("DATE_SIGNATURE")),(result.getInt("DUREE")));
+				obj = new ConventionStage((result.getInt("NO_CONTRAT")),DAO.dateFromOracleToJava(result.getDate("DATE_SIGNATURE")),(result.getInt("DUREE")));
 				
 			}
 			request.close();
@@ -73,6 +63,12 @@ public class ConventionStageDAO extends DAO<ConventionStage> {
 
 	@Override
 	public ConventionStage update(ConventionStage obj) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ConventionStage> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}

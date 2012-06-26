@@ -3,11 +3,7 @@ package dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 import beans.ContratApprentissage;
 
@@ -25,17 +21,11 @@ public class ContratApprentissageDAO extends DAO<ContratApprentissage> {
 					+ "'" + obj.getSalaire() + "'"+ "'," + "'"+ obj.getDuree() + "')";
 
 			request.executeUpdate(requete);
-
-			if (debug)
-				System.out.println(requete);
-
 			request.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return obj;
-		
-		return null;
 	}
 
 	@Override
@@ -62,7 +52,7 @@ public class ContratApprentissageDAO extends DAO<ContratApprentissage> {
 
 			if(result.first()){
 			
-				obj = new ContratApprentissage((result.getInt("NO_CONTRAT")),(result.getDate("DATE_SIGNATURE")),(result.getDouble("SALAIRE"),(result.getString("DUREE")));
+				obj = new ContratApprentissage((result.getInt("NO_CONTRAT")),DAO.dateFromOracleToJava(result.getDate("DATE_SIGNATURE")),(result.getDouble("SALAIRE")),(result.getInt("DUREE")));
 				
 			}
 			request.close();
@@ -74,6 +64,12 @@ public class ContratApprentissageDAO extends DAO<ContratApprentissage> {
 
 	@Override
 	public ContratApprentissage update(ContratApprentissage obj) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ContratApprentissage> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
