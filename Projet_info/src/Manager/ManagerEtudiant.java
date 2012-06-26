@@ -10,6 +10,7 @@ public class ManagerEtudiant {
 
 	public static void calculMoyenneSemestre (Etudiant et, GregorianCalendar datedebut, GregorianCalendar datedefin){
 		float moyenne = 0;
+		float note = 0;
 		int coef = 0;
 		Semestre semestre = new Semestre();
 		Semestre semestrePrecedent = semestre;
@@ -21,8 +22,10 @@ public class ManagerEtudiant {
 				semestrePrecedent = semestre;
 				for (int j = 0; j < semestre.getMesUE().size() ; ++j){
 					if (semestre.getMesUE().get(j).getMaFormation() == p.getMaFormation()){
-						moyenne += ManagerUE.calculMoyenneUE(semestre.getMesUE().get(j), et.getNumeroEtudiant(), datedebut, datedefin);
+						note = ManagerUE.calculMoyenneUE(semestre.getMesUE().get(j), et.getNumeroEtudiant(), datedebut, datedefin);
+						moyenne += note;
 						coef += 1;
+						System.out.println("l'UE " +   semestre.getMesUE().get(i).getNumeroUE() + " Coefficient  : " + " Note : " + note  );
 					}
 				}
 			}
