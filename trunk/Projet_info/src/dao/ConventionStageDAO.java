@@ -69,7 +69,7 @@ public class ConventionStageDAO extends DAO<ConventionStage> {
 
 	@Override
 	public List<ConventionStage> findAll() {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stubc
 		return null;
 	}
 

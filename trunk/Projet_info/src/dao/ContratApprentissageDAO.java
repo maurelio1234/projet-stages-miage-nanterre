@@ -36,7 +36,7 @@ public class ContratApprentissageDAO extends DAO<ContratApprentissage> {
 			request.executeUpdate("DELETE FROM " + ContratApprentissageDAO.TABLE +" WHERE NO_CONTRAT = " +obj.getNumeroContrat());
 			request.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			// TODO Auto-generated catch blocks
 			e.printStackTrace();
 		}
 		
