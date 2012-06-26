@@ -18,9 +18,8 @@ import dao.DAO;
 
 public class OffreDeStageDAO extends DAO<OffreDeStage>{
 	
+	public static String TABLE = "OFFRE_STAGE";
 	private String FIND_OFFRESTAGE = "SELECT * FROM OFFRE_STAGE WHERE NO_OFFRE =";
-	private String CREATE_OFFRESTAGE = "INSERT INTO OFFRE_STAGE";
-	private String DELETE_OFFRESTAGE = "DELETE FROM OFFRE_STAGE WHERE NO_OFFRE =";
 	private String UPDATE_OFFRESTAGE = "UPDATE OFFRE_STAGE SET ";
 	private String NO_ENT_OFFRESTAGE = "SELECT NO_ENTREPRISE FROM OFFRE_STAGE WHERE NO_OFFRE =";
 	private String LIST_OFFRESTAGE = "SELECT * FROM OFFRE_STAGE";
@@ -30,40 +29,36 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
 	private SimpleDateFormat sf;
 	
 	public OffreDeStageDAO() throws SQLException {
-        Connection cx=DriverManager.getConnection("jdbc:oracle:thin:@miage03.dmiage.u-paris10.fr:"
-                                                + "1521:MIAGE","ebkacouc","apprentis2010pw");
-        
-        st=cx.createStatement();
+		
+        st=this.connect.createStatement();
 		// TODO Auto-generated constructor stub
 	}
 	@Override
 	public OffreDeStage create(OffreDeStage ods) {
-		ResultSet rs;
 		try {
-			rs = st.executeQuery(CREATE_OFFRESTAGE + ods.getNumeroOffreDeStage() + "," + ods.getDescriptionPoste() + "," + ods.getEtatOffre() + "," 
-					+ ods.getMonEntreprise().getNumeroEntreprise() + "," + ods.getDateFinStage() + "," + ods.getDateDebutStage());
-			while(rs.next()){
-				ods.setNumeroOffreDeStage(rs.getInt("NO_OFFRE")); 
-				ods.setDescriptionPoste(rs.getString("DESCRIPTION_OFFRE"));
-				ods.setEtatOffre(rs.getString("ETAT_OFFRE"));
-			}
+		
+			String rs = "INSERT INTO" + OffreDeStageDAO.TABLE + "VALUES (" + ods.getNumeroOffreDeStage() + "," + ods.getDescriptionPoste() + "," + ods.getEtatOffre() + "," 
+					+ ods.getMonEntreprise().getNumeroEntreprise() + "," + ods.getDateFinStage() + "," + ods.getDateDebutStage() + ")";
+			
+			st.executeUpdate(rs);
+			st.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return ods;
-		
+
 	}
 
 	@Override
 	public void delete(OffreDeStage ods) {
 		try {
-			st.executeQuery(DELETE_OFFRESTAGE + ods.getNumeroOffreDeStage());
+//			Statement request = this.connect.createStatement();
+			st.executeUpdate("DELETE FROM"  + OffreDeStageDAO.TABLE + " WHERE NO_OFFRE =" + ods.getNumeroOffreDeStage());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 
 	@Override
