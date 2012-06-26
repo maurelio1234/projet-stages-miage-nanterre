@@ -1,7 +1,6 @@
 package dao;
 
 
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -23,13 +22,10 @@ public class EtudiantDAO extends DAO<Etudiant> {
 	private String FIND_ID_ETUDIAND_BY_LOGIN_MDP = "SELECT e.no_etudiant FROM candidat c, etudiant e WHERE c.no_candidat=e.no_candidat AND c.login_candidat='";
 	
 	public EtudiantDAO() throws SQLException{
-		this.connect = DriverManager.getConnection(
-				"jdbc:oracle:thin:@miage03.dmiage.u-paris10.fr:",
-				"", "");
-		st = connect.createStatement();
+		st = this.connect.createStatement();
 	}
 
-	public Etudiant find(int numEtudiant) throws SQLException {
+	public Etudiant find(int numEtudiant) {
 		Etudiant etudiant = new Etudiant();
 		Candidat candidat = new Candidat();
 		try {
@@ -63,8 +59,16 @@ public class EtudiantDAO extends DAO<Etudiant> {
 	}
 
 	
-	public void create(Etudiant etudiant) throws SQLException {
-			this.st.executeUpdate(CREATE_ETUDIANT + etudiant.getNumeroEtudiant() + "," + etudiant.getMonCandidat().getNumeroCandidat());
+	public Etudiant create(Etudiant etudiant) {
+			Etudiant etudiant_recup = null;
+			try {
+				this.st.executeUpdate(CREATE_ETUDIANT + etudiant.getNumeroEtudiant() + "," + etudiant.getMonCandidat().getNumeroCandidat());
+				etudiant_recup = this.find(etudiant.getMonCandidat().getNumeroCandidat());
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return etudiant_recup;
 	}
 
 
@@ -78,36 +82,51 @@ public class EtudiantDAO extends DAO<Etudiant> {
 	}
 
 	
-	public void update(Etudiant etudiant) {
+	public Etudiant update(Etudiant etudiant) {
+		Etudiant etudiant_recup = null;
 		try {
 			this.st.executeUpdate(UPDATE_ETUDIANT + etudiant.getNumeroEtudiant());
+			etudiant_recup = find(etudiant.getNumeroEtudiant());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return etudiant_recup;
 	}
 
 		
-	public List<Etudiant> findAll() throws SQLException {
+	public List<Etudiant> findAll() {
 	ArrayList<Etudiant> listEtudiants = new ArrayList<Etudiant>();
 	Etudiant etudiant = new Etudiant();
 	Candidat candidat = new Candidat();
-	ResultSet rs = this.st.executeQuery(LIST_ETUDIANT);
-	for (int i = 0; i < rs.getFetchSize(); i++) {
-		while (rs.next()) {
-			etudiant.setNumeroEtudiant(rs.getInt("no_candidat"));
-			candidat.setNom(rs.getString("nom_candidat"));
-			candidat.setPrenom(rs.getString("prenom_candidat"));
-			candidat.setAdresse(rs.getString("adresse"));
-			candidat.setTelephone(rs.getString("telephone"));
-			candidat.setLogin(rs.getString("login"));
-			candidat.setMail(rs.getString("mail"));
-			candidat.setPassword(rs.getString("pasword"));
-			etudiant.setMonCandidat(candidat);
+	ResultSet rs = null;
+	try {
+		rs = this.st.executeQuery(LIST_ETUDIANT);
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	try {
+		for (int i = 0; i < rs.getFetchSize(); i++) {
+			while (rs.next()) {
+				etudiant.setNumeroEtudiant(rs.getInt("no_candidat"));
+				candidat.setNom(rs.getString("nom_candidat"));
+				candidat.setPrenom(rs.getString("prenom_candidat"));
+				candidat.setAdresse(rs.getString("adresse"));
+				candidat.setTelephone(rs.getString("telephone"));
+				candidat.setLogin(rs.getString("login"));
+				candidat.setMail(rs.getString("mail"));
+				candidat.setPassword(rs.getString("pasword"));
+				etudiant.setMonCandidat(candidat);
+			}
+			listEtudiants.add(etudiant);
 		}
-		listEtudiants.add(etudiant);
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
 	}
 	return listEtudiants;
 	}
+
 }
 	
