@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import beans.Entreprise;
 import beans.Jours;
@@ -67,7 +68,6 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
 
 	@Override
 	public OffreDeStage update(OffreDeStage ods) {
-		
 		ResultSet rs;
 		try {
 			rs = st.executeQuery(UPDATE_OFFRESTAGE + ods.getNumeroOffreDeStage());
@@ -98,7 +98,6 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
 		
 		try {
 			while(rs.next()){
-				System.out.println("Je suis dans la 1ere boucle");
 				ods.setNumeroOffreDeStage(rs.getInt("NO_OFFRE")); 
 				System.out.println("Je fais no offre: " + rs.getInt("NO_OFFRE"));
 			    ods.setDescriptionPoste(rs.getString("DESCRIPTION_OFFRE"));
@@ -112,10 +111,6 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
 //    			System.out.println("Je suis dans la 2e boucle");
 ////    			ent.setNumeroEntreprise(rs.getInt("NO_ENTREPRISE")); 
 //                ent.setNom(rs.getString("NOM_ENTREPRISE"));
-//                ent.setTelephone(rs.getString("TELEPHONE_ENTREPRISE"));
-//                ent.setMail(rs.getString("MAIL_ENTREPRISE"));
-//                ent.setLogin(rs.getString("LOGIN_ENTREPRISE"));
-//                ent.setPassword(rs.getString("MDP_ENTREPRISE"));
 //    		}
 //    		ods.setMonEntreprise(ent);
 				
@@ -133,9 +128,7 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
 				ods.setDateFinStage(jr);  
 				
 				String jourFinS = stringToCalendar(jourFin);
-				System.out.println("Je fais Date fin: " + jourFinS);
-				
-				
+				System.out.println("Je fais Date fin: " + jourFinS);	
 				
 			}
 		} catch (SQLException e) {
@@ -153,13 +146,14 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
 		return ods;
 	}
 	
+	//Conversion d'un type date en gregorianCalendar
 	public static GregorianCalendar asCalendar(Date date) {
 		GregorianCalendar cal = (GregorianCalendar) GregorianCalendar.getInstance();
 		cal.setTime(date);
 		return cal;
 	}
 	
-	
+	// Conversion d'une date de type gregorianCalendar en String
 	public static String stringToCalendar(GregorianCalendar sDate) throws Exception {
 		int year = sDate.get(GregorianCalendar.YEAR);
 		int month = sDate.get(GregorianCalendar.MONTH);
@@ -170,38 +164,42 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
         return date;
 	} 
 	
-
-	public ArrayList<OffreDeStage> getList() throws SQLException {
-		ArrayList<OffreDeStage> listOffreStage = new ArrayList();
+	//Recupere toute les offres de stage de la base 
+	@Override
+	public List<OffreDeStage> findAll() {
+		List<OffreDeStage> listOffreStage = new ArrayList<OffreDeStage>();
 		OffreDeStage ods = new OffreDeStage();
 		Entreprise ent = new Entreprise();
-		
-		ResultSet rs = st.executeQuery(LIST_OFFRESTAGE);
-		for(int i=0; i<rs.getFetchSize(); i++){
-			while(rs.next()){
-				ods.setNumeroOffreDeStage(rs.getInt("NO_OFFRE")); 
-	            ods.setDescriptionPoste(rs.getString("DESCRIPTION_OFFRE"));
-	            ods.setEtatOffre(rs.getString("ETAT_OFFRE"));
-	            ResultSet rs2 = st.executeQuery(FIND_ENTREPRISE + rs.getInt("NO_ENTREPRISE"));
-	    		while(rs2.next()){
-	    			ent.setNumeroEntreprise(rs.getInt("NO_ENTREPRISE")); 
-	                ent.setNom(rs.getString("NOM"));
-	                ent.setAdresse(rs.getString("ADRESSE"));
-	                ent.setTelephone(rs.getString("TELEPHONE"));
-	                ent.setMail(rs.getString("MAIL"));
-	                ent.setLogin(rs.getString("LOGIN"));
-	                ent.setPassword(rs.getString("PASSWORD"));
-	    		}
-	    		ods.setMonEntreprise(ent);
-	    		
+	
+		try {
+			ResultSet rs = st.executeQuery(LIST_OFFRESTAGE);
+			for(int i=0; i<rs.getFetchSize(); i++){
+				while(rs.next()){
+					ods.setNumeroOffreDeStage(rs.getInt("NO_OFFRE")); 
+			        ods.setDescriptionPoste(rs.getString("DESCRIPTION_OFFRE"));
+			        ods.setEtatOffre(rs.getString("ETAT_OFFRE"));
+			        ResultSet rs2 = st.executeQuery(FIND_ENTREPRISE + rs.getInt("NO_ENTREPRISE"));
+					while(rs2.next()){
+						ent.setNumeroEntreprise(rs.getInt("NO_ENTREPRISE")); 
+			            ent.setNom(rs.getString("NOM"));
+			            ent.setAdresse(rs.getString("ADRESSE"));
+			            ent.setTelephone(rs.getString("TELEPHONE"));
+			            ent.setMail(rs.getString("MAIL"));
+			            ent.setLogin(rs.getString("LOGIN"));
+			            ent.setPassword(rs.getString("PASSWORD"));
+					}
+					ods.setMonEntreprise(ent);
+					
+				}
+				listOffreStage.add(ods);
 			}
-			listOffreStage.add(ods);
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		return listOffreStage;
 	}
 	
 	 public static void load() {
-	        // TODO code application logic here
 	        /**Chargement du driver JDBC=Etape1*/
 	        try{
 	            Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -212,5 +210,7 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
 	        }
 	                
 	    }
+	
+	
 
 }
