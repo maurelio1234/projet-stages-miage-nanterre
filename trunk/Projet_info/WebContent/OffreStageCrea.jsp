@@ -8,11 +8,15 @@
 </head>
 <body>
 	<h1>Offre de Stage</h1>
-	<form METHOD="POST"
-		ACTION="http://localhost:8080/Car1_TD4_MVC/Controller">
+	<form METHOD="POST"	ACTION="ControleurCreaOS">
 		<p>Veuillez rentrer votre offre de stage!</p>
 		<p>Intitule de l'offre: </p>
 		<INPUT TYPE="text" NAME="intitule" SIZE="80" MAXLENGTH="150">
+		<p>Date début de stage : 
+		<INPUT TYPE="text" NAME="dateDebut" SIZE="15" MAXLENGTH="25">
+		 Date fin de stage : 
+		<INPUT TYPE="text" NAME="dateFin" SIZE="15" MAXLENGTH="25">
+		</p>
 		<p>Description : </p>
 		<TEXTAREA NAME="description" ROWS="10" COLS="80"></TEXTAREA><br>
 		<input type="submit" value="Enregistrer" /><INPUT TYPE="button" VALUE="Annuler">
