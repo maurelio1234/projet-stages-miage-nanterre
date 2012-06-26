@@ -21,7 +21,7 @@ public class EntrepriseDAO extends DAO<Entreprise>{
 	private String DELETE_ENTREPRISE = "DELETE FROM Entreprise WHERE no_entreprise=";
 	private String UPDATE_ENTREPRISE = "UPDATE Entreprise SET ";
 	private String LIST_ENTREPRISE = "SELECT * FROM ENTREPRISE";
-	private String LIST_OFFRESTAGE = "SELECT * FROM ENTREPRISE OFFRE_STAGE WHERE NO_ENTREPRISE =";
+	private String LIST_OFFRESTAGE = "SELECT * FROM OFFRE_STAGE WHERE NO_ENTREPRISE =";
 	
 	
 	private Statement st;
@@ -31,10 +31,9 @@ public class EntrepriseDAO extends DAO<Entreprise>{
 	
 	//table = new hashtable();
 		
-	public EntrepriseDAO() throws SQLException {
-        Connection cx=DriverManager.getConnection("jdbc:oracle:thin:@miage03.dmiage.u-paris10.fr:"
-                                                + "1521:MIAGE","ebkacouc","apprentis2010pw");
-        st=cx.createStatement();
+	public EntrepriseDAO() throws SQLException{
+
+        st=this.connect.createStatement();
         
 		Entreprise ent = new Entreprise();
 		ResultSet rs = st.executeQuery(LIST_ENTREPRISE);
@@ -189,22 +188,32 @@ public List<OffreDeStage> ChargerOffreEnt(Entreprise ent) throws SQLException{
 	}
 
 	
-	public ArrayList<Entreprise> getList() throws SQLException {
+	@Override
+	public List<Entreprise> findAll(){
+		
 		List<Entreprise> listEntreprise = new ArrayList<Entreprise>();
 		Entreprise ent = new Entreprise();
-		ResultSet rs = st.executeQuery(LIST_ENTREPRISE);
-		for(int i=0; i<rs.getFetchSize(); i++){
-			while(rs.next()){
-				ent.setNumeroEntreprise(rs.getInt("NO_ENTREPRISE")); 
-                ent.setNom(rs.getString("NOM_ENTREPRISE"));
-                ent.setTelephone(rs.getString("TELEPHONE_ENTREPRISE"));
-                ent.setMail(rs.getString("MAIL_ENTREPRISE"));
-                ent.setLogin(rs.getString("LOGIN_ENTREPRISE"));
-                ent.setPassword(rs.getString("MDP_ENTREPRISE"));
-                
+		ResultSet rs;
+		try {
+			rs = st.executeQuery(LIST_ENTREPRISE);
+			
+			for(int i=0; i<rs.getFetchSize(); i++){
+				while(rs.next()){
+					ent.setNumeroEntreprise(rs.getInt("NO_ENTREPRISE")); 
+	                ent.setNom(rs.getString("NOM_ENTREPRISE"));
+	                ent.setTelephone(rs.getString("TELEPHONE_ENTREPRISE"));
+	                ent.setMail(rs.getString("MAIL_ENTREPRISE"));
+	                ent.setLogin(rs.getString("LOGIN_ENTREPRISE"));
+	                ent.setPassword(rs.getString("MDP_ENTREPRISE"));
+	                
+				}
+				listEntreprise.add(ent);
 			}
-			listEntreprise.add(ent);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
 		return (ArrayList<Entreprise>) listEntreprise;
 	}
 	
@@ -222,11 +231,7 @@ public List<OffreDeStage> ChargerOffreEnt(Entreprise ent) throws SQLException{
 			}
 		}
 
-				///if(identifEnt.get(login).equals(password)){
-				//	return true;
-				//}
-				//return false;	
 	}
-	
+
 
 }
