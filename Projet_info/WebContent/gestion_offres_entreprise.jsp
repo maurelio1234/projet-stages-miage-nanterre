@@ -10,7 +10,7 @@
 <body>
 	<jsp:useBean id="entr" scope="session" class="beans.Entreprise"/>
 	<h1>Gestion des offres de <% out.println(entr.getNom()); %> :</h1>
-	<form METHOD="POST"	ACTION="ControleurCreaOS">
+	<form METHOD="POST"	ACTION="OffreStageCrea.jsp">
 		<p>Liste de vos offres :</p>
 
 			<%
@@ -21,7 +21,7 @@
 		        <%
 			 	out.println(ods.getDescriptionPoste() + " : état à " + ods.getEtatOffre()) ;
 			 	%>
-			 	<a href="OffreStagev2.jsp"><img src="/../src/images/modify.png" alt="delete" height="16" width="16"/></a>
+			 	<a href="OffreStageModif.jsp"><img src="/../src/images/modify.png" alt="delete" height="16" width="16"/></a>
 				<a href="Suppresion.jsp"><img src="/src/images/delete.png" alt="delete" height="16" width="16"/></a>
 			 	<br>
 			 	<%
