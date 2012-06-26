@@ -29,8 +29,9 @@ public class Controleur_Accueil_Etudiant {
 	
 	public void doPost(HttpServletRequest request) throws ServletException, IOException, SQLException {
 		Etudiant etudiant=new Etudiant();
-		etudiant.setNumeroEtudiant(request.getParameter("numero_etudiant");
+		//etudiant.setNumeroEtudiant(request.getParameter("numero_etudiant");
 
-		RequestDispatcher disp=getServletContext().getRequestDispatcher("/accueil_etudiant.jsp");
+		//RequestDispatcher disp=getServletContext().getRequestDispatcher("/accueil_etudiant.jsp");
+	}
 		
 }
