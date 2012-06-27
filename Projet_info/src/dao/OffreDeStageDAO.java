@@ -81,7 +81,7 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
 
 	@Override
 	public OffreDeStage find(int id) {
-		OffreDeStage ods = new OffreDeStage();
+		OffreDeStage ods = null;
 //		Entreprise ent = new Entreprise();
 		Jours jr = new Jours();
 		 
