@@ -21,12 +21,11 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
 	public static String TABLE = "OFFRE_STAGE";
 	private String FIND_OFFRESTAGE = "SELECT * FROM OFFRE_STAGE WHERE NO_OFFRE =";
 	private String UPDATE_OFFRESTAGE = "UPDATE OFFRE_STAGE SET ";
-	private String NO_ENT_OFFRESTAGE = "SELECT NO_ENTREPRISE FROM OFFRE_STAGE WHERE NO_OFFRE =";
 	private String LIST_OFFRESTAGE = "SELECT * FROM OFFRE_STAGE";
 	private String FIND_ENTREPRISE = "SELECT * FROM ENTREPRISE WHERE NO_ENTREPRISE =";
 	
 	private Statement st;
-	private SimpleDateFormat sf;
+	private SimpleDateFormat sf = new SimpleDateFormat("dd/MM/yyyy");
 	
 	public OffreDeStageDAO() throws SQLException {
         st=this.connect.createStatement();
@@ -78,13 +77,13 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
 	@Override
 	public OffreDeStage find(int id) {
 		OffreDeStage ods = new OffreDeStage();
-//		Entreprise ent = new Entreprise();
+
 		Jours jr = new Jours();
 		 
 		ResultSet rs;
 		try {
 			rs = st.executeQuery(FIND_OFFRESTAGE + id);
-//		ResultSet rs1 = st.executeQuery(NO_ENT_OFFRESTAGE + id);
+
 		try {
 			while(rs.next()){
 				ods.setNumeroOffreDeStage(rs.getInt("NO_OFFRE")); 
@@ -93,31 +92,18 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
 			    System.out.println("Je fais description offre: " + rs.getString("DESCRIPTION_OFFRE"));
 			    ods.setEtatOffre(rs.getString("ETAT_OFFRE"));
 			    System.out.println("Je fais etat offre: " + rs.getString("ETAT_OFFRE"));
-			    
-//    		ResultSet rs2 = st.executeQuery(FIND_ENTREPRISE + rs.getInt("NO_ENTREPRISE"));
-//    		System.out.println("Je fais No entreprise: " + rs.getString("NO_NETREPRISE"));
-//    		while(rs2.next()){
-//    			System.out.println("Je suis dans la 2e boucle");
-////    			ent.setNumeroEntreprise(rs.getInt("NO_ENTREPRISE")); 
-//                ent.setNom(rs.getString("NOM_ENTREPRISE"));
-//    		}
-//    		ods.setMonEntreprise(ent);
-				
-//            Entreprise etp = etpDAO.find(rs.getInt("NO_ENTREPRISE"));
-//            etp.setNumeroEntreprise(rs.getInt("NO_ENTREPRISE"));
-//            ods.setMonEntreprise(etp);
-			    
+			    		    
 			    GregorianCalendar jourDebut = asCalendar(rs.getDate("DATE_DEBUT_STAGE"));
 				jr.setDateDuJour(jourDebut);
 				ods.setDateDebutStage(jr);
-				System.out.println("Je fais Date debut: " + jourDebut);
+				System.out.println("Je fais Date debut: " + sf.format(jourDebut.getTime()));
 				
 				GregorianCalendar jourFin = asCalendar(rs.getDate("DATE_FIN_STAGE"));
 				jr.setDateDuJour(jourFin);
 				ods.setDateFinStage(jr);  
-				
-				String jourFinS = stringToCalendar(jourFin);
-				System.out.println("Je fais Date fin: " + jourFinS);	
+				String jourFinS = calendarToString(jourFin);
+				System.out.println("Je fais Date fin: " + sf.format(jourFin.getTime()));
+				System.out.println("Je fais Date fin avec fonction: " + jourFinS);	
 				
 			}
 		} catch (SQLException e) {
@@ -143,13 +129,9 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
 	}
 	
 	// Conversion d'une date de type gregorianCalendar en String
-	public static String stringToCalendar(GregorianCalendar sDate) throws Exception {
-		int year = sDate.get(GregorianCalendar.YEAR);
-		int month = sDate.get(GregorianCalendar.MONTH);
-		int day = sDate.get(GregorianCalendar.DAY_OF_MONTH);
-        
+	public static String calendarToString(GregorianCalendar sDate) throws Exception {     
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        String date = sdf.format(sDate);
+        String date = sdf.format(sDate.getTime());
         return date;
 	} 
 	
