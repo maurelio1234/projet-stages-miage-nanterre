@@ -13,11 +13,10 @@
 	<%
 		Float NoteFinal = (Float) (request.getAttribute("NoteFinal"));
 	%>
-
-	<h1>Note de :</h1>
 	<h1>
 		<%
-			out.print(etudiant.getMonCandidat().getNom());
+			//out.print("Note de : "etudiant.getMonCandidat().getNom());
+		out.print("Note de : toto");
 		%>
 	</h1>
 	<table>
@@ -30,13 +29,20 @@
 			</td>
 		</tr>
 
-		<%
-			Iterator itValue = hSemestre.values().iterator();
-			Iterator itKey = hSemestre.keySet().iterator();
-			while (itValue.hasNext()) {
-				out.print("Nom du semestre : " + itKey.next() + " note du semestre : " + itValue.next());
-			}
-		%>
+		<tr>
+			<td>Note des semestres :</td>
+			<td>
+
+
+				<%
+					//Iterator itValue = hSemestre.values().iterator();
+					//Iterator itKey = hSemestre.keySet().iterator();
+					//while (itValue.hasNext()) {
+						//out.print("Nom du semestre : " + itKey.next() + " note du semestre : " + itValue.next());
+					//}
+				%>
+			</td>
+		</tr>
 	</table>
 </body>
 </html>
