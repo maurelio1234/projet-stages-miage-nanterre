@@ -9,6 +9,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import beans.Candidat;
+import beans.Etudiant;
 
 
 public class CandidatDAO extends DAO<Candidat>{
@@ -21,15 +22,16 @@ public class CandidatDAO extends DAO<Candidat>{
 
 	private Statement st;
 	
-	public CandidatDAO() throws SQLException{
-		Connection cx=DriverManager.getConnection("jdbc:oracle:thin:@miage03.dmiage.u-paris10.fr:1521:MIAGE","xacouder","enhancer");
-		st = (Statement) cx.createStatement();
+	public CandidatDAO()throws SQLException{
+		this.connect = DriverManager.getConnection(
+				"jdbc:oracle:thin:@//localhost:1521/MIAGE",
+				"xacouder", "enhancer");
+		st = connect.createStatement();
 	}
 
 	@Override
 	public Candidat create(Candidat candidat) {
-		return candidat;
-		
+		return null;
 	}
 
 	@Override
@@ -38,42 +40,52 @@ public class CandidatDAO extends DAO<Candidat>{
 		
 	}
 
-	@Override
 	public Candidat update(Candidat candidat) {
-		return candidat;
-		// TODO Auto-generated method stub
-		
+		Candidat candidat_recup = new  Candidat();
+		try {
+			this.st.executeUpdate(UPDATE_CANDIDAT + "adresse_candidat='" + candidat.getAdresse() +"', telephone_candidat='" + candidat.getTelephone() + "' WHERE no_candidat=" +candidat.getNumeroCandidat() );
+			candidat_recup = find(candidat.getNumeroCandidat());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return candidat_recup;
 	}
+	
 
-	@Override
 	public Candidat find(int no_candidat) {
 		return null;
 		/*ResultSet rs = this.st.executeQuery(FIND_CANDIDAT + no_candidat);
+>>>>>>> .r123
 		Candidat candidat = new Candidat();
-		candidat.setNumeroCandidat(rs.getInt("no_candidat"));
-		candidat.setNom(rs.getString("nom_candidat"));
-		candidat.setPrenom(rs.getString("prenom_candidat"));
-		candidat.setAdresse(rs.getString("adresse_candidat"));
-		candidat.setTelephone(rs.getString("telephone_candidat"));
-		GregorianCalendar date = new GregorianCalendar();
-		candidat.setDateNaissance(date.setTime(rs.getDate("date_naissance")));
-		candidat.setLogin(rs.getString("login_candidat"));
-		candidat.setPassword(rs.getString("mdp_candidat"));
-		candidat.setMail(rs.getString("email_candidat"));
-		candidat.setEtatDuDossier(rs.getBoolean("etat_du_dossier"));
-		
+		try {
+			rs = this.st.executeQuery(FIND_CANDIDAT + no_candidat);
+			candidat.setNumeroCandidat(rs.getInt("no_candidat"));
+			candidat.setNom(rs.getString("nom_candidat"));
+			candidat.setPrenom(rs.getString("prenom_candidat"));
+			candidat.setAdresse(rs.getString("adresse_candidat"));
+			candidat.setTelephone(rs.getString("telephone_candidat"));
+			//GregorianCalendar date = new GregorianCalendar();
+			//candidat.setDateNaissance(date.setTime(rs.getDate("date_naissance")));
+			candidat.setLogin(rs.getString("login_candidat"));
+			candidat.setPassword(rs.getString("mdp_candidat"));
+			candidat.setMail(rs.getString("email_candidat"));
+			candidat.setEtatDuDossier(rs.getBoolean("etat_du_dossier"));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return candidat;*/
 	}
 
-	public ArrayList<Candidat> getList() throws SQLException {
-		// TODO Auto-generated method stub
+	public ArrayList<Candidat> findAll() {
 		return null;
 	}
-
-	@Override
-	public List<Candidat> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public ArrayList<Candidat> findAllByPromo(int numPromo){
+		ArrayList<Candidat> candidantByPromo = new ArrayList<Candidat>();
+		
+		return candidantByPromo;
 	}
 
 }
