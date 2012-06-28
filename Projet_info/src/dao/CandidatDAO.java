@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import beans.Candidat;
 
@@ -26,25 +27,28 @@ public class CandidatDAO extends DAO<Candidat>{
 	}
 
 	@Override
-	public void create(Candidat candidat) throws SQLException {
+	public Candidat create(Candidat candidat) {
+		return candidat;
 		
 	}
 
 	@Override
-	public void delete(Candidat candidat) throws SQLException {
+	public void delete(Candidat candidat) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void update(Candidat candidat) throws SQLException {
+	public Candidat update(Candidat candidat) {
+		return candidat;
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Candidat find(int no_candidat) throws SQLException {
-		ResultSet rs = this.st.executeQuery(FIND_CANDIDAT + no_candidat);
+	public Candidat find(int no_candidat) {
+		return null;
+		/*ResultSet rs = this.st.executeQuery(FIND_CANDIDAT + no_candidat);
 		Candidat candidat = new Candidat();
 		candidat.setNumeroCandidat(rs.getInt("no_candidat"));
 		candidat.setNom(rs.getString("nom_candidat"));
@@ -58,11 +62,16 @@ public class CandidatDAO extends DAO<Candidat>{
 		candidat.setMail(rs.getString("email_candidat"));
 		candidat.setEtatDuDossier(rs.getBoolean("etat_du_dossier"));
 		
-		return candidat;
+		return candidat;*/
+	}
+
+	public ArrayList<Candidat> getList() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public ArrayList<Candidat> getList() throws SQLException {
+	public List<Candidat> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
