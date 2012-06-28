@@ -9,9 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import dao.EtudiantDAO;
-
 import Manager.ManagerNoteEtudiant;
 import beans.Etudiant;
 
@@ -63,7 +61,6 @@ public class Controleur_Gestion_Notes extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-
 		request.setAttribute("etudiant", etudiant);
 		request.setAttribute("NoteFinal", ManagerNoteEtudiant.noteFinal(etudiant));
 		request.setAttribute("hSemestre", ManagerNoteEtudiant.gethSemestre());
