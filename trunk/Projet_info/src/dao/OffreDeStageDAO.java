@@ -29,14 +29,12 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
 	private SimpleDateFormat sf;
 	
 	public OffreDeStageDAO() throws SQLException {
-		
         st=this.connect.createStatement();
-		// TODO Auto-generated constructor stub
+        
 	}
 	@Override
 	public OffreDeStage create(OffreDeStage ods) {
 		try {
-		
 			String rs = "INSERT INTO" + OffreDeStageDAO.TABLE + "VALUES (" + ods.getNumeroOffreDeStage() + "," + ods.getDescriptionPoste() + "," + ods.getEtatOffre() + "," 
 					+ ods.getMonEntreprise().getNumeroEntreprise() + "," + ods.getDateFinStage() + "," + ods.getDateDebutStage() + ")";
 			
@@ -56,7 +54,6 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
 //			Statement request = this.connect.createStatement();
 			st.executeUpdate("DELETE FROM"  + OffreDeStageDAO.TABLE + " WHERE NO_OFFRE =" + ods.getNumeroOffreDeStage());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -72,7 +69,6 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
 				ods.setEtatOffre(rs.getString("ETAT_OFFRE"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return ods;
@@ -81,16 +77,14 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
 
 	@Override
 	public OffreDeStage find(int id) {
-		OffreDeStage ods = null;
+		OffreDeStage ods = new OffreDeStage();
 //		Entreprise ent = new Entreprise();
 		Jours jr = new Jours();
 		 
 		ResultSet rs;
 		try {
 			rs = st.executeQuery(FIND_OFFRESTAGE + id);
-		
 //		ResultSet rs1 = st.executeQuery(NO_ENT_OFFRESTAGE + id);
-		
 		try {
 			while(rs.next()){
 				ods.setNumeroOffreDeStage(rs.getInt("NO_OFFRE")); 
