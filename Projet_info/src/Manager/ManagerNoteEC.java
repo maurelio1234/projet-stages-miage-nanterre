@@ -1,12 +1,9 @@
 package Manager;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.GregorianCalendar;
 
 import beans.EC;
 
-public class ManagerEC {
+public class ManagerNoteEC {
 
 	public static float calculMoyenneEC(EC ec, int NumeroEtudiant) {
 		float moyenne = 0;
@@ -17,8 +14,7 @@ public class ManagerEC {
 					if (ec.getMesExamens().get(i).getMesNotes().get(j).getNote() >= 0) {
 						moyenne += ec.getMesExamens().get(i).getMesNotes().get(j).getNote() * ec.getMesExamens().get(i).getCoefficient();
 						coef += ec.getMesExamens().get(i).getCoefficient();
-					} else if (ec.getMesExamens().get(i).getMesNotes().get(j)
-							.getNote() == -3) { // -3 = Absence non justifiée donc on prends en compte le coef
+					} else if (ec.getMesExamens().get(i).getMesNotes().get(j).getNote() == -3) { // -3 = Absence non justifiée donc on prends en compte le coef
 						coef += ec.getMesExamens().get(i).getCoefficient();
 					}
 				}

@@ -7,15 +7,17 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Offre de Stage</h1>
-	<form METHOD="POST"
-		ACTION="http://localhost:8080/Car1_TD4_MVC/Controller">
+	<jsp:useBean id="etudiant" scope="request" class="beans.Etudiant"/>
+	<jsp:useBean id="ManagerNoteEtudiant" scope="request" class="Manager.ManagerNoteEtudiant"/>
+	<%Float NoteFinal = (Float)(request.getAttribute("NoteFinal"));%>
+
+	<h1>Note de : </h1>
+	<h1><% out.print(etudiant.getMonCandidat().getNom()); %></h1>
+
+	<form METHOD="POST"ACTION="http://localhost:8080/Car1_TD4_MVC/Controller">
 		<p>Veuillez rentrer votre offre de stage!</p>
 		<p>Intitule de l'offre: </p>
-		<INPUT TYPE="text" NAME="intitule" SIZE="80" MAXLENGTH="150">
-		<p>Description : </p>
-		<TEXTAREA NAME="description" ROWS="10" COLS="80"></TEXTAREA><br>
-		<input type="submit" value="Enregistrer" /><INPUT TYPE="button" VALUE="Annuler">
+
 	</form>
 </body>
 </html>
