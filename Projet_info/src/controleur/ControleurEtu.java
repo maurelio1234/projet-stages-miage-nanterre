@@ -52,7 +52,7 @@ public class ControleurEtu extends HttpServlet {
 			EtudiantDAO etu = new EtudiantDAO();
 			
 			RequestDispatcher disp;
-			if(etu.AuthEtu(login, mdp )){
+			/*if(etu.AuthEtu(login, mdp )){
 
 				disp=getServletContext().getRequestDispatcher("/accueil_etudiant.jsp");
 				disp.forward(request, response);
@@ -60,7 +60,7 @@ public class ControleurEtu extends HttpServlet {
 				else {  
 					disp=getServletContext().getRequestDispatcher("/Login.jsp");
 					disp.forward(request, response);
-				}
+				}*/
 			}
 		 catch (SQLException e) {
 			// TODO Auto-generated catch block
