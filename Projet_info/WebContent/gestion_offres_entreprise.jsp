@@ -21,8 +21,8 @@
 		        <%
 			 	out.println(ods.getDescriptionPoste() + " : état à " + ods.getEtatOffre()) ;
 			 	%>
-			 	<a href="OffreStageModif.jsp"><img src="/../src/images/modify.png" alt="delete" height="16" width="16"/></a>
-				<a href="Suppresion.jsp"><img src="/src/images/delete.png" alt="delete" height="16" width="16"/></a>
+			 	<a href="OffreStageModif.jsp?idOffre=<%=i%>"><img src="/../src/images/modify.png" alt="delete" height="16" width="16"/></a>
+				<a href="Suppresion.jsp?idOffre=<%=i%>"><img src="/src/images/delete.png" alt="delete" height="16" width="16"/></a>
 			 	<br>
 			 	<%
 			}
