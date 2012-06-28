@@ -367,7 +367,7 @@
 			<artifactId>projetintegration</artifactId>
 			<version>2.1</version>
 			<scope>system</scope>
-			<systemPath>${integration.lib.path}/Formation_3.1.jar</systemPath>
+			<systemPath>${integration.lib.path}/Formation_3.2.jar</systemPath>
 		</dependency>
 	</dependencies>
 </project>
