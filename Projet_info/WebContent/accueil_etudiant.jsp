@@ -12,6 +12,7 @@
 	<input type="hidden" id="id_etudiant" value="12<%out.print(etudiant.getNumeroEtudiant());%>"/>
 		<a href="Controleur_Info_Etudiant?id_etudiant=<%out.print(etudiant.getNumeroEtudiant());%>">Vos informations</a><br/>
 		<a href="Controleur_Gestion_Notes?id_etudiant=<%etudiant.getNumeroEtudiant();%>">Vos notes</a><br/>
-		<a href="Controleur_Gestion_Offres">Vos offres</a><br/>
+		<a href="Controleur_ConsultOffreAll">Vos offres</a><br/>
+		<a href="Controleur_Promotion">Liste des Promotions</a><br/>
 </body>
 </html>
