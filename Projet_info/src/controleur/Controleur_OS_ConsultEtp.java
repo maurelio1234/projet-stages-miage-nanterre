@@ -42,15 +42,12 @@ public class Controleur_OS_ConsultEtp extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		int identifiant = Integer.parseInt(request.getParameter("id"));
-		
+
 		try {
 			odsDAO = new OffreDeStageDAO();
-//			ods = odsDAO.find(identifiant);
 			ods = odsDAO.find(1);
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
