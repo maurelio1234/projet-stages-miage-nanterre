@@ -112,7 +112,7 @@ public List<OffreDeStage> ChargerOffreEnt(Entreprise ent) throws SQLException{
 	public Entreprise create(Entreprise entr) {
 		ResultSet rs;
 		try {
-			rs = st.executeQuery(CREATE_ENTREPRISE + entr.getNumeroEntreprise() + "," +"'"+ entr.getNom() +"'"+ "," +"'"+ entr.getTelephone()+"'" + "," 
+			rs = st.executeQuery(CREATE_ENTREPRISE + "SEQ_ENTREPRISE.NEXTVAL," +"'"+ entr.getNom() +"'"+ "," +"'"+ entr.getTelephone()+"'" + "," 
 			+ "'"+entr.getMail()+"'" + "," + "'"+entr.getLogin() +"'"+ "," + "'"+entr.getPassword()+"'"+")");
 		
 			while(rs.next()){
