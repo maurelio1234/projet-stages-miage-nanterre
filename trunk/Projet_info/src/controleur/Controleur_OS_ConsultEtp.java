@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import beans.Entreprise;
 import beans.OffreDeStage;
 
 import dao.OffreDeStageDAO;
@@ -36,26 +37,52 @@ public class Controleur_OS_ConsultEtp extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		//Récupération de la liste des offres de l'entreprise
+		HttpSession session = request.getSession(true);
+		Entreprise entr = (Entreprise) session.getAttribute("entr");
+		String param = request.getParameter("idOffre");
+		int numO = Integer.parseInt(param);
+		
+		OffreDeStage ods = new OffreDeStage();
+		ods = entr.getMesOffres().get(numO);
+		
+		/*try {
+			odsDAO = new OffreDeStageDAO();
+			ods = odsDAO.find(1);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}*/
+		
+		session.setAttribute("offrestage",ods);
+		RequestDispatcher disp=getServletContext().getRequestDispatcher("/OffreStageConsult.jsp");
+		disp.forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		try {
-			odsDAO = new OffreDeStageDAO();
-			ods = odsDAO.find(1);
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		HttpSession session = request.getSession(true);
-		
-		session.setAttribute("offrestage",ods);
-		RequestDispatcher disp=getServletContext().getRequestDispatcher("/OffreStageConsult.jsp");
-		disp.forward(request, response);
+		//Récupération de la liste des offres de l'entreprise
+//		HttpSession session = request.getSession(true);
+//		Entreprise entr = (Entreprise) session.getAttribute("entr");
+//		String param = request.getParameter("idOffre");
+//		int numO = Integer.parseInt(param);
+//		
+//		OffreDeStage ods = new OffreDeStage();
+//		ods = entr.getMesOffres().get(numO);
+//		
+//		/*try {
+//			odsDAO = new OffreDeStageDAO();
+//			ods = odsDAO.find(1);
+//			
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}*/
+//		
+//		session.setAttribute("offrestage",ods);
+//		RequestDispatcher disp=getServletContext().getRequestDispatcher("/OffreStageConsult.jsp");
+//		disp.forward(request, response);
 		
 	}
 

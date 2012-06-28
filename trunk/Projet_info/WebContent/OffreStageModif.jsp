@@ -16,12 +16,13 @@
 	   int numO = Integer.parseInt(param);
 	%>
 	<h1>Offre de Stage</h1>
-	<form METHOD="POST"
-		ACTION="Controleur_OS_Modif">
+	<form METHOD="POST"	ACTION="Controleur_OS_Modif">
 		<p>Modification de votre offre de stage!</p>
 		<%
 			OffreDeStage ods = new OffreDeStage();
-		    ods=entr.getMesOffres().get(numO);%>
+		    ods=entr.getMesOffres().get(numO);
+		    session.setAttribute("offre", ods);
+		 %>
 		<p>Intitule de l'offre: </p>
 		<INPUT TYPE="text" NAME="intitule" SIZE="80" MAXLENGTH="150">
 		<p>Date début de stage : 

@@ -34,11 +34,24 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
 	@Override
 	public OffreDeStage create(OffreDeStage ods) {
 		try {
-			String rs = "INSERT INTO" + OffreDeStageDAO.TABLE + "VALUES (" + ods.getNumeroOffreDeStage() + "," + ods.getDescriptionPoste() + "," + ods.getEtatOffre() + "," 
-					+ ods.getMonEntreprise().getNumeroEntreprise() + "," + ods.getDateFinStage() + "," + ods.getDateDebutStage() + ")";
+			System.out.println("INSERT INTO "+ OffreDeStageDAO.TABLE +" (NO_OFFRE,DESCRIPTION_OFFRE,ETAT_OFFRE,NO_ENTREPRISE,DATE_FIN_STAGE,DATE_DEBUT_STAGE) " +
+					"VALUES (SEQ_OFFRE_STAGE.NEXTVAL,'"+ods.getDescriptionPoste()+"','"+ods.getEtatOffre()+"',"+ods.getMonEntreprise().getNumeroEntreprise()
+					+","+DAO.dateFromJavaToOracle(ods.getDateFinStage().getDateDuJour())
+					+","+DAO.dateFromJavaToOracle(ods.getDateDebutStage().getDateDuJour())	+")");
+			Statement request = this.connect.createStatement();
+			request.executeUpdate("INSERT INTO "+ OffreDeStageDAO.TABLE +" (NO_OFFRE,DESCRIPTION_OFFRE,ETAT_OFFRE,NO_ENTREPRISE,DATE_FIN_STAGE,DATE_DEBUT_STAGE) " +
+					"VALUES (SEQ_OFFRE_STAGE.NEXTVAL,'"+ods.getDescriptionPoste()+"','"+ods.getEtatOffre()+"',"+ods.getMonEntreprise().getNumeroEntreprise()
+					+","+DAO.dateFromJavaToOracle(ods.getDateFinStage().getDateDuJour())
+					+","+DAO.dateFromJavaToOracle(ods.getDateDebutStage().getDateDuJour())	+")");
+		
+			request.close();
 			
-			st.executeUpdate(rs);
-			st.close();
+			
+//			String rs = "INSERT INTO" + OffreDeStageDAO.TABLE + "VALUES (" + ods.getNumeroOffreDeStage() + "," + ods.getDescriptionPoste() + "," + ods.getEtatOffre() + "," 
+//					+ ods.getMonEntreprise().getNumeroEntreprise() + "," + ods.getDateFinStage() + "," + ods.getDateDebutStage() + ")";
+//			
+//			st.executeUpdate(rs);
+//			st.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -57,22 +70,41 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
 		}
 	}
 
+//	@Override
+//	public OffreDeStage update(OffreDeStage ods) {
+//		ResultSet rs;
+//		try {
+//			rs = st.executeQuery(UPDATE_OFFRESTAGE + ods.getNumeroOffreDeStage());
+//			while(rs.next()){
+//				ods.setNumeroOffreDeStage(rs.getInt("NO_OFFRE")); 
+//				ods.setDescriptionPoste(rs.getString("DESCRIPTION_OFFRE"));
+//				ods.setEtatOffre(rs.getString("ETAT_OFFRE"));
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return ods;
+//		
+//	}
+	
 	@Override
 	public OffreDeStage update(OffreDeStage ods) {
-		ResultSet rs;
-		try {
-			rs = st.executeQuery(UPDATE_OFFRESTAGE + ods.getNumeroOffreDeStage());
-			while(rs.next()){
-				ods.setNumeroOffreDeStage(rs.getInt("NO_OFFRE")); 
-				ods.setDescriptionPoste(rs.getString("DESCRIPTION_OFFRE"));
-				ods.setEtatOffre(rs.getString("ETAT_OFFRE"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return ods;
-		
-	}
+
+        int id = ods.getNumeroOffreDeStage();
+        try {            
+            Statement request = this.connect.createStatement();
+			request.executeUpdate("UPDATE "+ OffreDeStageDAO.TABLE +" SET  DESCRIPTION_OFFRE  ='" + ods.getDescriptionPoste()
+					+"', DATE_FIN_STAGE = " + DAO.dateFromJavaToOracle(ods.getDateFinStage().getDateDuJour()) 
+					+", DATE_DEBUT_STAGE = " + DAO.dateFromJavaToOracle(ods.getDateDebutStage().getDateDuJour())
+					+" WHERE NO_OFFRE = " + ods.getNumeroOffreDeStage());
+		request.close();            
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return ods;
+    }
 
 	@Override
 	public OffreDeStage find(int id) {

@@ -53,30 +53,36 @@ public class EntrepriseDAO extends DAO<Entreprise>{
 	}
 	
 	
-public List<OffreDeStage> ChargerOffreEnt(Entreprise ent) throws SQLException{
+public List<OffreDeStage> ChargerOffreEnt(Entreprise ent) throws Exception{
 		
         ResultSet rs = st.executeQuery(LIST_OFFRESTAGE + ent.getNumeroEntreprise());
         List<OffreDeStage> listeOffre = new ArrayList<OffreDeStage>();
         
+        Jours jrD = new Jours();
+		Jours jrF = new Jours();
+        
 		while(rs.next()){
 			OffreDeStage ods = new OffreDeStage();
-	        ConventionStage cvst = new ConventionStage();
-	        Jours jr = new Jours();
-	        
-			ods.setDescriptionPoste(rs.getString("DESCRIPTION_OFFRE"));
-			ods.setEtatOffre(rs.getString("ETAT_OFFRE"));
-			ods.setNumeroOffreDeStage(rs.getInt("NO_OFFRE"));
 			ods.setMonEntreprise(ent);
-			ods.setMaConvention(cvst);
-			
-			//date
-			GregorianCalendar jourDebut = asCalendar(rs.getDate("DATE_DEBUT_STAGE"));
-			jr.setDateDuJour(jourDebut);
-			ods.setDateDebutStage(jr);
+			ods.setNumeroOffreDeStage(rs.getInt("NO_OFFRE")); 
+			System.out.println("Je fais no offre: " + rs.getInt("NO_OFFRE"));
+		    ods.setDescriptionPoste(rs.getString("DESCRIPTION_OFFRE"));
+		    System.out.println("Je fais description offre: " + rs.getString("DESCRIPTION_OFFRE"));
+		    ods.setEtatOffre(rs.getString("ETAT_OFFRE"));
+		    System.out.println("Je fais etat offre: " + rs.getString("ETAT_OFFRE"));
+		    		    
+		    GregorianCalendar jourDebut = asCalendar(rs.getDate("DATE_DEBUT_STAGE"));
+			jrD.setDateDuJour(jourDebut);
+			ods.setDateDebutStage(jrD);
+			String jourDebutS = calendarToString(jourDebut);
+			System.out.println("Je fais Date fin avec fonction: " + jourDebutS);	
 			
 			GregorianCalendar jourFin = asCalendar(rs.getDate("DATE_FIN_STAGE"));
-			jr.setDateDuJour(jourFin);
-			ods.setDateDebutStage(jr);	
+			jrF.setDateDuJour(jourFin);
+			ods.setDateFinStage(jrF);  
+			String jourFinS = calendarToString(jourFin);
+			System.out.println("Je fais Date fin avec fonction: " + jourFinS);	
+			
 			listeOffre.add(ods);
 		}
         return listeOffre;        
@@ -93,6 +99,13 @@ public List<OffreDeStage> ChargerOffreEnt(Entreprise ent) throws SQLException{
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Date date = sdf.parse(sDate);
         return asCalendar(date);
+	}
+	
+	// Conversion d'une date de type gregorianCalendar en String
+	public static String calendarToString(GregorianCalendar sDate) throws Exception {     
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String date = sdf.format(sDate.getTime());
+        return date;
 	}
 	
     public static void load() {
