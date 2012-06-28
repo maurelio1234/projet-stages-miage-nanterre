@@ -22,7 +22,7 @@ import beans.Promotion;
 /**
  * Servlet implementation class ControleurEtudiant
  */
-@WebServlet("/ControleurEtudiant")
+@WebServlet("/Controleur_Info_Etudiant")
 public class Controleur_Info_Etudiant extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -37,6 +37,24 @@ public class Controleur_Info_Etudiant extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		EtudiantDAO etudiantDAO = null;
+		response.setContentType("text/html;charset=UTF-8");
+		try {
+			etudiantDAO = new EtudiantDAO();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Etudiant etudiant = new Etudiant();
+		try {
+			etudiant = etudiantDAO.find(Integer.parseInt(request.getParameter("id_etudiant")));
+		}
+		catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
+		request.setAttribute("etudiant", etudiant);
+		RequestDispatcher disp=getServletContext().getRequestDispatcher("/information_etudiant.jsp?id_etudiant=" + etudiant.getNumeroEtudiant());
+		disp.forward(request, response);
 	}
 
 	
@@ -45,23 +63,5 @@ public class Controleur_Info_Etudiant extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	public void doPost(HttpServletRequest request) throws ServletException, IOException, SQLException {
-		Etudiant etudiant=new Etudiant();
-		etudiant.setNumeroEtudiant(Integer.parseInt(request.getParameter("numero_etudiant")));
-		etudiant.getMonCandidat().setNom(request.getParameter("nom"));
-		etudiant.getMonCandidat().setPrenom(request.getParameter("prenom"));
-		etudiant.getMonCandidat().setAdresse(request.getParameter("adresse"));
-		etudiant.getMonCandidat().setTelephone(request.getParameter("telephone"));
-		//etudiant.getMonCandidat().setDateNaissance(request.getParameter("date_naissance"));
-		etudiant.getMonCandidat().setMail(request.getParameter("mail"));
-		etudiant.getMonCandidat().setLogin(request.getParameter("login"));
-		
-		EtudiantDAO etudiantDAO = new EtudiantDAO();
-		etudiantDAO.update(etudiant);
-
-		RequestDispatcher disp=getServletContext().getRequestDispatcher("/accueil_etudiant.jsp");
-		
-		//disp.forward(request, response);
-		
 	}
-
 }

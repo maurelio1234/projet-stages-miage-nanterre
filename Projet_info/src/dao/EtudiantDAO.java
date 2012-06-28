@@ -1,6 +1,7 @@
 package dao;
 
 
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -17,12 +18,12 @@ public class EtudiantDAO extends DAO<Etudiant> {
 	private String FIND_ETUDIANT = "SELECT * FROM candidat, etudiant WHERE candidat.no_candidat=etudiant.no_candidat AND etudiant.no_etudiant=";
 	private String CREATE_ETUDIANT = "INSERT INTO etudiant(no_etudiant,no_candidat) VALUES (";
 	private String DELETE_ETUDIANT = "DELETE FROM etudiant WHERE no_etudiant=";
-	private String UPDATE_ETUDIANT = "UPDATE etudiant SET ";
+	private String UPDATE_ETUDIANT = "UPDATE candidat SET ";
 	private String LIST_ETUDIANT = "SELECT * FROM candidat, etudiant WHERE candidat.no_candidat=etudiant.no_candidat";
 	private String FIND_ID_ETUDIAND_BY_LOGIN_MDP = "SELECT e.no_etudiant FROM candidat c, etudiant e WHERE c.no_candidat=e.no_candidat AND c.login_candidat='";
 	
 	public EtudiantDAO() throws SQLException{
-		st = this.connect.createStatement();
+		st = connect.createStatement();
 	}
 
 	public Etudiant find(int numEtudiant) {
@@ -40,7 +41,6 @@ public class EtudiantDAO extends DAO<Etudiant> {
 				candidat.setMail(rs.getString("email_candidat"));
 				candidat.setPassword(rs.getString("mdp_candidat"));
 				etudiant.setMonCandidat(candidat);
-				
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -60,11 +60,11 @@ public class EtudiantDAO extends DAO<Etudiant> {
 
 	
 	public Etudiant create(Etudiant etudiant) {
-			Etudiant etudiant_recup = null;
-			try {
+		Etudiant etudiant_recup = new  Etudiant();	
+		try {
 				this.st.executeUpdate(CREATE_ETUDIANT + etudiant.getNumeroEtudiant() + "," + etudiant.getMonCandidat().getNumeroCandidat());
-				etudiant_recup = this.find(etudiant.getMonCandidat().getNumeroCandidat());
-			} catch (SQLException e) {
+				etudiant_recup = find(etudiant.getNumeroEtudiant());
+		} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -81,17 +81,8 @@ public class EtudiantDAO extends DAO<Etudiant> {
 		}
 	}
 
-	
 	public Etudiant update(Etudiant etudiant) {
-		Etudiant etudiant_recup = null;
-		try {
-			this.st.executeUpdate(UPDATE_ETUDIANT + etudiant.getNumeroEtudiant());
-			etudiant_recup = find(etudiant.getNumeroEtudiant());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return etudiant_recup;
+		return null;
 	}
 
 		
@@ -127,6 +118,5 @@ public class EtudiantDAO extends DAO<Etudiant> {
 	}
 	return listEtudiants;
 	}
-
 }
 	

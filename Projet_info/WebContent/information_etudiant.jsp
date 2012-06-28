@@ -8,35 +8,36 @@
 <body>
 	<jsp:useBean id="etudiant" scope="request" class="beans.Etudiant"/>
 	<h1>Information de l'étudiant</h1>
-	<form method="POST" action="AccueilEtudiant.jsp">
+	<form method="POST" action="Controleur_Update_Etudiant.jsp?id_etudiant=<%out.print(etudiant.getNumeroEtudiant());%>">
+	<input type="hidden" name="id_candidat" value="<%out.print(etudiant.getMonCandidat().getNumeroCandidat());%>"/>
 		<table>
 			<tr>
 				<td>Nom : </td>
-				<td><input type="text" name="nom" value="<% etudiant.getMonCandidat().getNom(); %>" /></td>
+				<td><% out.print(etudiant.getMonCandidat().getNom()); %></td>
 			</tr>
 			<tr>
 				<td>Prénom : </td>
-				<td><input type="text" name="prenom" value="<% etudiant.getMonCandidat().getPrenom(); %>"/></td>
+				<td><% out.print(etudiant.getMonCandidat().getPrenom()); %></td>
 			</tr>
 			<tr>
 				<td>Adresse : </td>
-				<td><input type="text" name="adresse" value="<% etudiant.getMonCandidat().getAdresse(); %>"/></td>
+				<td><input type="text" name="adresse" value="<% out.print(etudiant.getMonCandidat().getAdresse()); %>"/></td>
 			</tr>
 			<tr>
 				<td>Date de naissance : </td>
-				<td><input type="text" name="date_naissance" value="<% etudiant.getMonCandidat().getDateNaissance(); %>"/></td>
+				<td><input type="text" name="date_naissance" value="<% out.print(etudiant.getMonCandidat().getDateNaissance()); %>"/></td>
 			</tr>
 			<tr>
 				<td>Telephone : </td>
-				<td><input type="text" name="telephone" value="<% etudiant.getMonCandidat().getTelephone(); %>" /></td>
+				<td><input type="text" name="telephone" value="<% out.print(etudiant.getMonCandidat().getTelephone()); %>" /></td>
 			</tr>
 			<tr>
 				<td>Mail : </td>
-				<td><input type="text" name="mail" value="<% etudiant.getMonCandidat().getMail(); %>"/></td>
+				<td><input type="text" name="mail" value="<% out.print(etudiant.getMonCandidat().getMail()); %>"/></td>
 			</tr>
 			<tr>
 				<td>Login : </td>
-				<td><input type="text" name="login" value="<% etudiant.getMonCandidat().getLogin(); %>"/></td>
+				<td><%out.print(etudiant.getMonCandidat().getLogin()); %></td>
 			</tr>
 		</table>
 		<br/>
