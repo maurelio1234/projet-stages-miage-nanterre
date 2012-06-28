@@ -63,11 +63,10 @@ public class Controleur_Gestion_Notes extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		ManagerNoteEtudiant managerNoteEtudiant = new ManagerNoteEtudiant();
-		float noteFinal = managerNoteEtudiant.noteFinal(etudiant);
+
 		request.setAttribute("etudiant", etudiant);
-		request.setAttribute("NoteFinal", noteFinal);
-		request.setAttribute("ManagerNoteEtudiant", managerNoteEtudiant);
+		request.setAttribute("NoteFinal", ManagerNoteEtudiant.noteFinal(etudiant));
+		request.setAttribute("hSemestre", ManagerNoteEtudiant.gethSemestre());
 		RequestDispatcher disp = getServletContext().getRequestDispatcher("/NotesFinalEtudiant.jsp?id_etudiant="+ etudiant.getNumeroEtudiant());
 		disp.forward(request, response);
 

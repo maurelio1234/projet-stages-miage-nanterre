@@ -8,10 +8,10 @@ import beans.Semestre;
 
 public class ManagerNoteEtudiant {
 
-	static Hashtable<Integer, Float> ue = new Hashtable<Integer, Float>();
-	static Hashtable<Integer, Float> hSemestre = new Hashtable<Integer, Float>();
+	private static  Hashtable<Integer, Float> ue = new Hashtable<Integer, Float>();
+	private static Hashtable<Integer, Float> hSemestre = new Hashtable<Integer, Float>();
 	
-	public float noteFinal(Etudiant et) {
+	public static float noteFinal(Etudiant et) {
 		float moyenne = 0;
 		float note = 0;
 		int coef = 0;
@@ -27,7 +27,7 @@ public class ManagerNoteEtudiant {
 							note = ManagerNoteUE.calculMoyenneUE(semestre.getMesUE().get(j), et.getNumeroEtudiant());
 							moyenne += note;
 							coef += 1;
-							ue.put(semestre.getMesUE().get(j).getNumeroUE(),note);
+							getUe().put(semestre.getMesUE().get(j).getNumeroUE(),note);
 						}
 						hSemestre.put(semestre.getNumeroSemestre(), moyenne /coef );
 					}
@@ -38,16 +38,25 @@ public class ManagerNoteEtudiant {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	public float CalculnoteFinal(){
+	public static float CalculnoteFinal(){
 		float moyenne = 0;
 		int coef = 0;
 	    Iterator itValue = hSemestre.values().iterator(); 
 	    Iterator itKey = hSemestre.keySet().iterator();
-		while (itValue.hasNext()){
-			moyenne += (Float)itKey.next();
+		while (itKey.hasNext()){
+			moyenne += (Float)itValue.next();
 			coef ++;
 		}
 		return moyenne / coef;
 		
 	}
+
+	public static Hashtable<Integer, Float> getUe() {
+		return ue;
+	}
+
+	public static Hashtable<Integer, Float> gethSemestre() {
+		return hSemestre;
+	}
+
 }
