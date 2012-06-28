@@ -62,12 +62,18 @@ public class ControleurCreaOS extends HttpServlet {
 		
 		//Récupération de la date en calendar
 		try {
-			date1 = OffreDeStageDAO.stringToCalendar(request.getParameter("dateDebut"));
-			date2 = OffreDeStageDAO.stringToCalendar(request.getParameter("dateFin"));
+			//date1 = OffreDeStageDAO.stringToCalendar(request.getParameter("dateDebut"));
+			//date2 = OffreDeStageDAO.stringToCalendar(request.getParameter("dateFin"));
+			
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		//Tests
+		date1 = new GregorianCalendar();
+		date2 = new GregorianCalendar();
+		
 		jr.setDateDuJour(date1);
 		jr.setDateDuJour(date2);
 		ods.setDateDebutStage(jr);
