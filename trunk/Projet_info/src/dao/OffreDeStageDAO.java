@@ -78,7 +78,8 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
 	public OffreDeStage find(int id) {
 		OffreDeStage ods = new OffreDeStage();
 
-		Jours jr = new Jours();
+		Jours jrD = new Jours();
+		Jours jrF = new Jours();
 		 
 		ResultSet rs;
 		try {
@@ -94,15 +95,15 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
 			    System.out.println("Je fais etat offre: " + rs.getString("ETAT_OFFRE"));
 			    		    
 			    GregorianCalendar jourDebut = asCalendar(rs.getDate("DATE_DEBUT_STAGE"));
-				jr.setDateDuJour(jourDebut);
-				ods.setDateDebutStage(jr);
-				System.out.println("Je fais Date debut: " + sf.format(jourDebut.getTime()));
+				jrD.setDateDuJour(jourDebut);
+				ods.setDateDebutStage(jrD);
+				String jourDebutS = calendarToString(jourDebut);
+				System.out.println("Je fais Date fin avec fonction: " + jourDebutS);	
 				
 				GregorianCalendar jourFin = asCalendar(rs.getDate("DATE_FIN_STAGE"));
-				jr.setDateDuJour(jourFin);
-				ods.setDateFinStage(jr);  
+				jrF.setDateDuJour(jourFin);
+				ods.setDateFinStage(jrF);  
 				String jourFinS = calendarToString(jourFin);
-				System.out.println("Je fais Date fin: " + sf.format(jourFin.getTime()));
 				System.out.println("Je fais Date fin avec fonction: " + jourFinS);	
 				
 			}
