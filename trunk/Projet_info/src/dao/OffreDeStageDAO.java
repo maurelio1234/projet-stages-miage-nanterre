@@ -1,8 +1,6 @@
 package dao;
 
-import java.sql.Connection;
 import java.sql.Date;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -14,7 +12,6 @@ import java.util.List;
 import beans.Entreprise;
 import beans.Jours;
 import beans.OffreDeStage;
-import dao.DAO;
 
 public class OffreDeStageDAO extends DAO<OffreDeStage>{
 	
@@ -168,40 +165,56 @@ public class OffreDeStageDAO extends DAO<OffreDeStage>{
         return date;
 	} 
 	
+	
+	
+	
 	//Recupere toute les offres de stage de la base 
 	@Override
 	public List<OffreDeStage> findAll() {
 		List<OffreDeStage> listOffreStage = new ArrayList<OffreDeStage>();
 		OffreDeStage ods = new OffreDeStage();
 		Entreprise ent = new Entreprise();
-	
+		Jours jrD = new Jours();
+		Jours jrF = new Jours();
+		
 		try {
 			ResultSet rs = st.executeQuery(LIST_OFFRESTAGE);
-			for(int i=0; i<rs.getFetchSize(); i++){
 				while(rs.next()){
 					ods.setNumeroOffreDeStage(rs.getInt("NO_OFFRE")); 
 			        ods.setDescriptionPoste(rs.getString("DESCRIPTION_OFFRE"));
 			        ods.setEtatOffre(rs.getString("ETAT_OFFRE"));
-			        ResultSet rs2 = st.executeQuery(FIND_ENTREPRISE + rs.getInt("NO_ENTREPRISE"));
-					while(rs2.next()){
-						ent.setNumeroEntreprise(rs.getInt("NO_ENTREPRISE")); 
-			            ent.setNom(rs.getString("NOM"));
-			            ent.setAdresse(rs.getString("ADRESSE"));
-			            ent.setTelephone(rs.getString("TELEPHONE"));
-			            ent.setMail(rs.getString("MAIL"));
-			            ent.setLogin(rs.getString("LOGIN"));
-			            ent.setPassword(rs.getString("PASSWORD"));
-					}
-					ods.setMonEntreprise(ent);
-					
+			        GregorianCalendar jourDebut = DAO.dateFromOracleToJava(rs.getDate("DATE_DEBUT_STAGE"));
+					jrD.setDateDuJour(jourDebut);
+					ods.setDateDebutStage(jrD);
+					GregorianCalendar jourFin = DAO.dateFromOracleToJava(rs.getDate("DATE_FIN_STAGE"));
+					jrF.setDateDuJour(jourFin);
+					ods.setDateFinStage(jrF);  	
+					listOffreStage.add(ods);
 				}
-				listOffreStage.add(ods);
-			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		System.out.println("NB offre " + listOffreStage.size());
 		return listOffreStage;
 	}
+	
+	public List<OffreDeStage> FindOffresValides() {
+		List<OffreDeStage> listOffreStage = new ArrayList<OffreDeStage>();
+		List<OffreDeStage> listOffreValides = new ArrayList<OffreDeStage>();
+		listOffreValides = findAll();
+			for(int i=0; i<listOffreStage.size(); i++){
+				if(listOffreStage.get(i).getEtatOffre()=="validé"){
+					listOffreValides.add(listOffreStage.get(i));
+				}
+			}
+				
+		return listOffreValides;
+		
+	}
+	
 	
 	 public static void load() {
 	        /**Chargement du driver JDBC=Etape1*/
