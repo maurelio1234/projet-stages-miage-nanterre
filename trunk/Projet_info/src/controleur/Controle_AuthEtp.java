@@ -51,7 +51,7 @@ public class Controle_AuthEtp extends HttpServlet {
 		
 		RequestDispatcher disp;
 		
-		if(a.authEntreprise(login,password)){
+		if(a.AuthEntreprise(login,password)){
 			disp=getServletContext().getRequestDispatcher("/OffreStageConsult.jsp");
 			disp.forward(request, response);
 			}

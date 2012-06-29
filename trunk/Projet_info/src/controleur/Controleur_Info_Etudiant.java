@@ -39,12 +39,9 @@ public class Controleur_Info_Etudiant extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		EtudiantDAO etudiantDAO = null;
 		response.setContentType("text/html;charset=UTF-8");
-		try {
+		
 			etudiantDAO = new EtudiantDAO();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		Etudiant etudiant = new Etudiant();
 		try {
 			etudiant = etudiantDAO.find(Integer.parseInt(request.getParameter("id_etudiant")));

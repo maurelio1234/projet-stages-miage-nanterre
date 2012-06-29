@@ -50,7 +50,7 @@ public class Controleur_Accueil_Etudiant extends HttpServlet {
 		Etudiant etudiant;
 		
 		response.setContentType("text/html;charset=UTF-8");
-		try {
+		
 			EtudiantDAO etudiantDAO = new EtudiantDAO();
 			RequestDispatcher disp;
 			int id_etudiant = etudiantDAO.AuthentificationEtudiant(login,mdp);
@@ -64,11 +64,7 @@ public class Controleur_Accueil_Etudiant extends HttpServlet {
 					disp=getServletContext().getRequestDispatcher("/authentification_etudiant.jsp");
 					disp.forward(request, response);
 				}
-			}
-		 catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			
 		
 		
 	}
