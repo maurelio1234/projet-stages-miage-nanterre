@@ -43,12 +43,11 @@ public class Controleur_Update_Etudiant extends HttpServlet {
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		EtudiantDAO etudiantDAO = null;
-		try {
+	
 			etudiantDAO = new EtudiantDAO();
-		} catch (SQLException e2) {
+		
 			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
+		
 		Etudiant etudiant;
 		etudiant = etudiantDAO.find(Integer.parseInt(request.getParameter("id_etudiant")));
 		System.out.println(etudiant);

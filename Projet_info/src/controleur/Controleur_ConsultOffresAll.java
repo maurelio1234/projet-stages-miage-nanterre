@@ -46,7 +46,7 @@ public class Controleur_ConsultOffresAll extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		ODS = new OffreDeStageDAO();
-		ODSV=ODS.findOffresValides();
+		ODSV=ODS.FindOffresValides();
 		System.out.print(ODSV.size());
 		HttpSession session = request.getSession(true);
 		session.setAttribute("OffreValide", ODSV);	
