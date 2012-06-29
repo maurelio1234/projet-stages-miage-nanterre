@@ -25,7 +25,7 @@
 		 for (int i = 0; i <lstcandi.size(); i++) {
 			 c=(beans.Candidat)lstcandi.get(i);
 			 %>
-		<a href="Controleur_Candidat_Promo"> <% out.print(c.getLogin());%><br />
+		 <% out.print(c.getNom()+" "+c.getPrenom());%><br />
 
 			<%
 		 }
