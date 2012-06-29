@@ -46,12 +46,12 @@ public class Controleur_ConsultOffresAll extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		ODS = new OffreDeStageDAO();
-		ODSV=ODS.FindOffresValides();
+		ODSV=ODS.findOffresValides();
 		System.out.print(ODSV.size());
 		HttpSession session = request.getSession(true);
 		session.setAttribute("OffreValide", ODSV);	
 		RequestDispatcher disp=getServletContext().getRequestDispatcher("/ConsultOffreAll.jsp");
-		disp.forward(request, response);
+		disp.forward(request, response);	
 		
 	}
 
