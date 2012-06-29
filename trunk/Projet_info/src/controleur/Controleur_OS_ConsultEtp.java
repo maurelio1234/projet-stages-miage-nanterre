@@ -28,7 +28,6 @@ public class Controleur_OS_ConsultEtp extends HttpServlet {
      * @see HttpServlet#HttpServlet()
      */
     public Controleur_OS_ConsultEtp() {
-    	odsDAO.load();
         // TODO Auto-generated constructor stub
     }
 
