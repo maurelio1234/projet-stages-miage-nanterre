@@ -8,8 +8,10 @@
 <body>
 	<jsp:useBean id="etudiant" scope="request" class="beans.Etudiant"/>
 	<h1>Information de l'étudiant</h1>
-	<form method="POST" action="Controleur_Update_Etudiant.jsp?id_etudiant=<%out.print(etudiant.getNumeroEtudiant());%>">
-	<input type="hidden" name="id_candidat" value="<%out.print(etudiant.getMonCandidat().getNumeroCandidat());%>"/>
+	<form method="POST" action="Controleur_Update_Etudiant?id_etudiant=<%out.print(etudiant.getNumeroEtudiant());%>">
+	<input type="hidden" name="id_candidat" id="id_candidat" value="<%out.print(etudiant.getMonCandidat().getNumeroCandidat());%>"/>
+	<input type="hidden" name="nom" id="nom" value="<% out.print(etudiant.getMonCandidat().getNom());%>"/>	
+	<input type="hidden" name="prenom" id="prenom" value="<% out.print(etudiant.getMonCandidat().getPrenom());%>"/>	
 		<table>
 			<tr>
 				<td>Nom : </td>
@@ -21,19 +23,19 @@
 			</tr>
 			<tr>
 				<td>Adresse : </td>
-				<td><input type="text" name="adresse" value="<% out.print(etudiant.getMonCandidat().getAdresse()); %>"/></td>
+				<td><input type="text" name="adresse" id="adresse" value="<% out.print(etudiant.getMonCandidat().getAdresse()); %>"/></td>
 			</tr>
 			<tr>
 				<td>Date de naissance : </td>
-				<td><input type="text" name="date_naissance" value="<% out.print(etudiant.getMonCandidat().getDateNaissance()); %>"/></td>
+				<td><% out.print(etudiant.getMonCandidat().getDateNaissance()); %></td>
 			</tr>
 			<tr>
 				<td>Telephone : </td>
-				<td><input type="text" name="telephone" value="<% out.print(etudiant.getMonCandidat().getTelephone()); %>" /></td>
+				<td><input type="text" name="telephone" id="telephone" value="<% out.print(etudiant.getMonCandidat().getTelephone()); %>" /></td>
 			</tr>
 			<tr>
 				<td>Mail : </td>
-				<td><input type="text" name="mail" value="<% out.print(etudiant.getMonCandidat().getMail()); %>"/></td>
+				<td><input type="text" name="mail" id="mail" value="<% out.print(etudiant.getMonCandidat().getMail()); %>"/></td>
 			</tr>
 			<tr>
 				<td>Login : </td>
