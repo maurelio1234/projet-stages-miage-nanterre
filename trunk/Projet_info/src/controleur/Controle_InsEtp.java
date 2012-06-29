@@ -49,24 +49,15 @@ public class Controle_InsEtp extends HttpServlet {
 		String mail = request.getParameter("Mail");
 		String login = request.getParameter("Login");
 		String pwd = request.getParameter("Password");
-		int    numeroEntreprise = 1458 ;
 		response.setContentType("text/html;charset=UTF-8");
 		
-		Entreprise etp=new Entreprise(numeroEntreprise,nom,telephone,mail,adresse,login,pwd);
-		EntrepriseDAO.load();
+		Entreprise etp=new Entreprise(0,nom,telephone,mail,adresse,login,pwd);
 		
-		try {
-			
-			EntrepriseDAO a = new EntrepriseDAO();
-			a.create(etp);
-			
-			RequestDispatcher disp=getServletContext().getRequestDispatcher("/OffreStageCrea.jsp");
-			disp.forward(request, response);
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		EntrepriseDAO a = new EntrepriseDAO();
+		a.create(etp);
+		
+		RequestDispatcher disp=getServletContext().getRequestDispatcher("/OffreStageCrea.jsp");
+		disp.forward(request, response);
 		
 
 	}
