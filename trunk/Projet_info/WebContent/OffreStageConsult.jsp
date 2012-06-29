@@ -13,7 +13,7 @@
 	<% SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");%>
 	<h1>Offre de Stage</h1>
 	<form METHOD="POST"
-		ACTION="http://localhost:8080/Car1_TD4_MVC/Controller">
+		ACTION="gestion_offres_entreprise">
 		<p>Consultation de votre offre de stage!</p>
 		<p>Intitule de l'offre: </p>
 		<input type="text" name="intitule" value="Intitule de votre offre" SIZE="80" MAXLENGTH="150" disabled="disabled" />
@@ -27,7 +27,7 @@
 		</p>
 		<p>Description : </p>
 		<TEXTAREA NAME="description" ROWS="10" COLS="80" disabled="disabled"><% out.print(offrestage.getDescriptionPoste()); %></TEXTAREA><br>
-		<input type="Retour"  /><INPUT TYPE="button" VALUE="Annuler">
+		<input type="submit" value="Retour" />
 	</form>
 </body>
 </html>
