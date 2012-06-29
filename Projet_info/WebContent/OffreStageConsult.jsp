@@ -27,7 +27,7 @@
 		</p>
 		<p>Description : </p>
 		<TEXTAREA NAME="description" ROWS="10" COLS="80" disabled="disabled"><% out.print(offrestage.getDescriptionPoste()); %></TEXTAREA><br>
-		<input type="submit" value="Modifier" /><INPUT TYPE="button" VALUE="Annuler">
+		<input type="Retour"  /><INPUT TYPE="button" VALUE="Annuler">
 	</form>
 </body>
 </html>
