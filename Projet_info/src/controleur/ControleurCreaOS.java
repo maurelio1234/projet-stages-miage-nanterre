@@ -90,9 +90,6 @@ public class ControleurCreaOS extends HttpServlet {
 			entDAO = new EntrepriseDAO();			
 			listeOffre = entDAO.ChargerOffreEnt(entr);
 			entr.setMesOffres(listeOffre);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

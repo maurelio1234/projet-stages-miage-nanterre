@@ -47,25 +47,18 @@ public class Controle_AuthEtp extends HttpServlet {
 		String password=request.getParameter("mdp");
 		
 	
-		try {
-			EntrepriseDAO a = new EntrepriseDAO();
-			EntrepriseDAO.load();
-			
-			RequestDispatcher disp;
-			
-			if(a.AuthEntreprise(login,password)){
-				disp=getServletContext().getRequestDispatcher("/OffreStageConsult.jsp");
-				disp.forward(request, response);
-				}
-			else {
-				disp=getServletContext().getRequestDispatcher("/Login.jsp");
-				disp.forward(request, response);	
-				}
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		EntrepriseDAO a = new EntrepriseDAO();
+		
+		RequestDispatcher disp;
+		
+		if(a.authEntreprise(login,password)){
+			disp=getServletContext().getRequestDispatcher("/OffreStageConsult.jsp");
+			disp.forward(request, response);
+			}
+		else {
+			disp=getServletContext().getRequestDispatcher("/Login.jsp");
+			disp.forward(request, response);	
+			}
 		
 		
 			

@@ -49,16 +49,11 @@ public class ControleurSupOS extends HttpServlet {
 		OffreDeStage ods = new OffreDeStage();
 		ods = (OffreDeStage) session.getAttribute("offre");
 		
-		try {
-			OffreDeStageDAO odsDAO = new OffreDeStageDAO();
-			odsDAO.delete(ods);
-			EntrepriseDAO entDAO = new EntrepriseDAO();
+		OffreDeStageDAO odsDAO = new OffreDeStageDAO();
+		odsDAO.delete(ods);
+		EntrepriseDAO entDAO = new EntrepriseDAO();
 //			listeOffre = entDAO.ChargerOffreEnt(entr);
-			entr.setMesOffres(listeOffre);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		entr.setMesOffres(listeOffre);
 		
 		//response.setContentType("text/html;charset=UTF-8");
 		request.setAttribute("entr", entr);

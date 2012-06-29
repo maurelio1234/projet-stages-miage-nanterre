@@ -35,7 +35,6 @@ public class ControleurGestOfEnt extends HttpServlet {
      */
     public ControleurGestOfEnt() {
         // TODO Auto-generated constructor stub
-    	entDAO.load();
     }
 
 	/**
@@ -62,9 +61,6 @@ public class ControleurGestOfEnt extends HttpServlet {
 			ent = entDAO.find(2);			
 			listeOffre = entDAO.ChargerOffreEnt(ent);
 			ent.setMesOffres(listeOffre);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
