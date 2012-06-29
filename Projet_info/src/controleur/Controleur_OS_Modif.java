@@ -82,8 +82,6 @@ public class Controleur_OS_Modif extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		System.out.println("Controleur Modif : " + ods1.getDescriptionPoste());
-		
 		request.setAttribute("entr", entr);
 		RequestDispatcher disp = getServletContext().getRequestDispatcher("/gestion_offres_entreprise.jsp");
 		disp.forward(request, response);
