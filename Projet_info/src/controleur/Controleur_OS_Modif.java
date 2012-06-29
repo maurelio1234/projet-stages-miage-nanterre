@@ -35,7 +35,6 @@ public class Controleur_OS_Modif extends HttpServlet {
      * @see HttpServlet#HttpServlet()
      */
     public Controleur_OS_Modif() {
-        odsDAO.load();
         // TODO Auto-generated constructor stub
     }
 

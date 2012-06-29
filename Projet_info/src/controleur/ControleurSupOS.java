@@ -53,7 +53,7 @@ public class ControleurSupOS extends HttpServlet {
 			OffreDeStageDAO odsDAO = new OffreDeStageDAO();
 			odsDAO.delete(ods);
 			EntrepriseDAO entDAO = new EntrepriseDAO();
-			listeOffre = entDAO.ChargerOffreEnt(entr);
+//			listeOffre = entDAO.ChargerOffreEnt(entr);
 			entr.setMesOffres(listeOffre);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
