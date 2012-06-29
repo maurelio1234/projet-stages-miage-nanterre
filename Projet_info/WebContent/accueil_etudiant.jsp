@@ -9,7 +9,6 @@
 <body>
 	<jsp:useBean id="etudiant" scope="request" class="beans.Etudiant"/>
 	<h1>Gestion des élèves :</h1>
-	<input type="hidden" id="id_etudiant" value="12<%out.print(etudiant.getNumeroEtudiant());%>"/>
 		<a href="Controleur_Info_Etudiant?id_etudiant=<%out.print(etudiant.getNumeroEtudiant());%>">Vos informations</a><br/>
 		<a href="Controleur_Gestion_Notes?id_etudiant=<%etudiant.getNumeroEtudiant();%>">Vos notes</a><br/>
 		<a href="Controleur_ConsultOffreAll">Vos offres</a><br/>

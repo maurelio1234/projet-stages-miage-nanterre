@@ -32,7 +32,8 @@ public class EtudiantDAO extends DAO<Etudiant> {
 		try {
 			ResultSet rs = this.st.executeQuery(FIND_ETUDIANT + numEtudiant);
 			while(rs.next()){
-				etudiant.setNumeroEtudiant(rs.getInt("no_candidat"));
+				etudiant.setNumeroEtudiant(rs.getInt("no_etudiant"));
+				candidat.setNumeroCandidat(rs.getInt("no_candidat"));
 				candidat.setNom(rs.getString("nom_candidat"));
 				candidat.setPrenom(rs.getString("prenom_candidat"));
 				candidat.setAdresse(rs.getString("adresse_candidat"));
@@ -82,7 +83,15 @@ public class EtudiantDAO extends DAO<Etudiant> {
 	}
 
 	public Etudiant update(Etudiant etudiant) {
-		return null;
+		try {
+			this.st.executeUpdate(UPDATE_ETUDIANT + "adresse_candidat='" + etudiant.getMonCandidat().getAdresse() +"', telephone_candidat='" + etudiant.getMonCandidat().getTelephone() + "' WHERE no_candidat=" + etudiant.getMonCandidat().getNumeroCandidat());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(UPDATE_ETUDIANT + "adresse_candidat='" + etudiant.getMonCandidat().getAdresse() +"', telephone_candidat='" + etudiant.getMonCandidat().getTelephone() + "' WHERE no_candidat=" + etudiant.getMonCandidat().getNumeroCandidat());
+		Etudiant etudiant_recup = find(etudiant.getNumeroEtudiant());
+		return etudiant_recup;
 	}
 
 		

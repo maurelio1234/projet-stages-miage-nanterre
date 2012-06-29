@@ -23,9 +23,6 @@ public class CandidatDAO extends DAO<Candidat>{
 	private Statement st;
 	
 	public CandidatDAO()throws SQLException{
-		this.connect = DriverManager.getConnection(
-				"jdbc:oracle:thin:@//localhost:1521/MIAGE",
-				"xacouder", "enhancer");
 		st = connect.createStatement();
 	}
 
@@ -43,7 +40,8 @@ public class CandidatDAO extends DAO<Candidat>{
 	public Candidat update(Candidat candidat) {
 		Candidat candidat_recup = new  Candidat();
 		try {
-			this.st.executeUpdate(UPDATE_CANDIDAT + "adresse_candidat='" + candidat.getAdresse() +"', telephone_candidat='" + candidat.getTelephone() + "' WHERE no_candidat=" +candidat.getNumeroCandidat() );
+			this.st.executeUpdate(UPDATE_CANDIDAT + "adresse_candidat='" + candidat.getAdresse() +"', telephone_candidat='" + candidat.getTelephone() + "' WHERE no_candidat=" +candidat.getNumeroCandidat());
+			System.out.println(UPDATE_CANDIDAT + "adresse_candidat='" + candidat.getAdresse() +"', telephone_candidat='" + candidat.getTelephone() + "' WHERE no_candidat=" +candidat.getNumeroCandidat());
 			candidat_recup = find(candidat.getNumeroCandidat());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

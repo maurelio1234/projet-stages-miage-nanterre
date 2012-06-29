@@ -53,7 +53,7 @@ public class Controleur_Info_Etudiant extends HttpServlet {
 			e.printStackTrace();
 		}
 		request.setAttribute("etudiant", etudiant);
-		RequestDispatcher disp=getServletContext().getRequestDispatcher("/information_etudiant.jsp?id_etudiant=" + etudiant.getNumeroEtudiant());
+		RequestDispatcher disp=getServletContext().getRequestDispatcher("/information_etudiant.jsp");
 		disp.forward(request, response);
 	}
 
