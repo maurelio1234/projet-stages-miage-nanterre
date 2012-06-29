@@ -71,17 +71,13 @@ public List<OffreDeStage> ChargerOffreEnt(Entreprise ent) throws Exception{
 		    ods.setEtatOffre(rs.getString("ETAT_OFFRE"));
 		    System.out.println("Je fais etat offre: " + rs.getString("ETAT_OFFRE"));
 		    		    
-		    GregorianCalendar jourDebut = asCalendar(rs.getDate("DATE_DEBUT_STAGE"));
+		    GregorianCalendar jourDebut = DAO.dateFromOracleToJava(rs.getDate("DATE_DEBUT_STAGE"));
 			jrD.setDateDuJour(jourDebut);
 			ods.setDateDebutStage(jrD);
-			String jourDebutS = calendarToString(jourDebut);
-			System.out.println("Je fais Date fin avec fonction: " + jourDebutS);	
 			
-			GregorianCalendar jourFin = asCalendar(rs.getDate("DATE_FIN_STAGE"));
+			GregorianCalendar jourFin = DAO.dateFromOracleToJava(rs.getDate("DATE_FIN_STAGE"));
 			jrF.setDateDuJour(jourFin);
 			ods.setDateFinStage(jrF);  
-			String jourFinS = calendarToString(jourFin);
-			System.out.println("Je fais Date fin avec fonction: " + jourFinS);	
 			
 			listeOffre.add(ods);
 		}
