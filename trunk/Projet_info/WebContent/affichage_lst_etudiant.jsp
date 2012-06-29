@@ -1,4 +1,4 @@
-<%@page import="beans.Formation"%>
+<%@page import="beans.Candidat"%>
 <%@ page import="beans.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -10,7 +10,7 @@
 </head>
 <body>
 	<h1>Gestion des promotions :</h1>
-	<jsp:useBean id="Forma" scope="session" class="java.util.ArrayList" />
+	<jsp:useBean id="lstcandi" scope="session" class="java.util.ArrayList" />
 		<!--<c:forEach var="IntituleOffre" items="${ListeOffre}"> 
 		<a href="gestion_eleves.jsp"> Promotion L3 Classique 2011/2012</a><br/>
 			<a href="gestion_eleves.jsp"> Promotion M1 Classique 2011/2012</a><br/>
@@ -21,12 +21,12 @@
 
 		<% 	
 		
-		Formation f=new Formation();
-		 for (int i = 0; i <Forma.size(); i++) {
-			 f=(beans.Formation)Forma.get(i);
+		Candidat c=new Candidat();
+		 for (int i = 0; i <lstcandi.size(); i++) {
+			 c=(beans.Candidat)lstcandi.get(i);
 			 %>
-		<a href="Controleur_Candidat_Promo"> <% out.print(f.getGrade()+" "+f.getNiveau()+" "+f.getLibelle());%><br />
-	<input type="hidden" name="aaa" value= <% out.print(f.getNumeroFormation());%>>
+		<a href="Controleur_Candidat_Promo"> <% out.print(c.getLogin());%><br />
+
 			<%
 		 }
 		 %> <!-- </c:forEach> -->
