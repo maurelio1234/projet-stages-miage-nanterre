@@ -11,13 +11,7 @@
 <body>
 	<h1>Gestion des promotions :</h1>
 	<jsp:useBean id="Forma" scope="session" class="java.util.ArrayList" />
-		<!--<c:forEach var="IntituleOffre" items="${ListeOffre}"> 
-		<a href="gestion_eleves.jsp"> Promotion L3 Classique 2011/2012</a><br/>
-			<a href="gestion_eleves.jsp"> Promotion M1 Classique 2011/2012</a><br/>
-			<a href="gestion_eleves.jsp"> Promotion M2 Classique 2011/2012</a><br/>
-			<a href="gestion_eleves.jsp"> Promotion L3 App 2011/2012</a><br/>
-			<a href="gestion_eleves.jsp"> Promotion M1 App 2011/2012</a><br/>
-			<a href="gestion_eleves.jsp"> Promotion M2 App 2011/2012</a><br/> -->
+	
 
 		<% 	
 		
@@ -29,6 +23,6 @@
 	<input type="hidden" name="aaa" value= <% out.print(f.getNumeroFormation());%>>
 			<%
 		 }
-		 %> <!-- </c:forEach> -->
+		 %> 
 </body>
 </html>
