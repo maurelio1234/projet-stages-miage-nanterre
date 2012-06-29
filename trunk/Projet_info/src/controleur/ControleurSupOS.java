@@ -47,15 +47,24 @@ public class ControleurSupOS extends HttpServlet {
 		Entreprise entr = new Entreprise();
 		entr = (Entreprise) session.getAttribute("entr");
 		OffreDeStage ods = new OffreDeStage();
-		ods = (OffreDeStage) session.getAttribute("offre");
+
+	    String param = request.getParameter("idOffre");
+		int numO = Integer.parseInt(param);
+	    ods=entr.getMesOffres().get(numO);
+
+		try {
+			EntrepriseDAO entDAO = new EntrepriseDAO();
+			OffreDeStageDAO odsDAO = new OffreDeStageDAO();
+			odsDAO.delete(ods);		
+			listeOffre = entDAO.ChargerOffreEnt(entr);
+			entr.setMesOffres(listeOffre);	
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		OffreDeStageDAO odsDAO = new OffreDeStageDAO();
-		odsDAO.delete(ods);
-		EntrepriseDAO entDAO = new EntrepriseDAO();
-//			listeOffre = entDAO.ChargerOffreEnt(entr);
 		entr.setMesOffres(listeOffre);
 		
-		//response.setContentType("text/html;charset=UTF-8");
 		request.setAttribute("entr", entr);
 		RequestDispatcher disp=	getServletContext().getRequestDispatcher("/gestion_offres_entreprise.jsp");
 		disp.forward(request, response);
