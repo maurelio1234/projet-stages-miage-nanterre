@@ -1,16 +1,14 @@
 package Manager;
 
-import java.sql.SQLException;
+
 import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map;
+
 
 import dao.ECDAO;
 import dao.ExamenDAO;
 import dao.FormationDAO;
 import dao.NoteDAO;
 import dao.PromotionDAO;
-import dao.SemestreDAO;
 import dao.UEDAO;
 import beans.EC;
 import beans.Etudiant;
@@ -18,7 +16,6 @@ import beans.Examen;
 import beans.Formation;
 import beans.Note;
 import beans.Promotion;
-import beans.Semestre;
 import beans.UE;
 
 import Manager.ManagerNoteEtudiant;
@@ -82,7 +79,7 @@ public class ManagerNoteEtudiant {
 					if (note.getNote() >= 0) {
 						moyenne += note.getNote() * examen.getCoefficient();
 						coef += examen.getCoefficient();
-					} else if (note.getNote()== -3) { // -3 = Absence non justifiée donc on prends en compte le coef
+					} else if (note.getNote()== -1) { // -1 = Absence non justifiée donc on prends en compte le coef
 						coef += examen.getCoefficient();
 					}
 				}
